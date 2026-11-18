@@ -181,6 +181,7 @@ svg { max-width: 100%; }
 @keyframes toolkit-star { from { transform: rotate(-12deg); } to { transform: rotate(18deg); } }
 @media (prefers-reduced-motion: reduce) {
   .project:is(:hover,:focus-within) .art-motion svg,
-  .tool-card:is(:hover,:focus-within) .chips .tag { transform: none; }
+  .tool-card:is(:hover,:focus-within) .chips .tag:nth-child(odd),
+  .tool-card:is(:hover,:focus-within) .chips .tag:nth-child(even) { transform: none; }
 }
 .tool-card-content { display: flex; flex: 1; flex-direction: column; align-items: flex-start; width: 100%; }
