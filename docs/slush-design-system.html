@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slush — Design System v1.0</title>
+<meta name="description" content="Complete Slush design system: color, type, layout, components, patterns, accessibility, responsive rules, web essentials and developer tokens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Bowlby+One&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--carbon:#000000;--paper:#ffffff;--sky:#dceeff;--concrete:#cccccc;--mist:#e9e9e9;--electric:#4da2ff;--mint:#55db9c;--lavender:#e9ccff;--ember:#fb4903;--sunburst:#ffd731;--violet:#5c4ade;--ink-soft:#404040;
+--font-display:"Lateral","Bowlby One","Druk","Antonio",Impact,sans-serif;
+--font-ui:"Aeonik Pro","Inter","Satoshi","General Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+--font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--radius-pill:1600px;--radius-panel:30px;--radius-card-lg:40px;--radius-card:20px;--radius-input:20px;--radius-sticker:16px;
+--s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:20px;--s-6:24px;--s-7:28px;--s-8:32px;--s-9:40px;--s-10:44px;--s-11:48px;--s-12:60px;--s-13:80px;--s-14:128px;--s-15:180px;--s-16:224px;
+--ease-out:cubic-bezier(.2,0,0,1);--dur-fast:120ms;--dur-base:200ms;--dur-slow:320ms;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--carbon);font-family:var(--font-ui);font-size:16px;line-height:1.5;letter-spacing:-.01em;font-feature-settings:"ss01","tnum";-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:var(--carbon);text-underline-offset:3px}
+a:hover{color:var(--violet)}
+:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+h1,h2,h3,h4,p,ul,ol{margin:0}
+code,.mono{font-family:var(--font-mono);font-size:13px;background:var(--mist);padding:2px 8px;border-radius:var(--radius-pill)}
+.doc{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh}
+.toc{position:sticky;top:0;height:100vh;overflow:auto;background:var(--sky);padding:24px 16px}
+.toc nav{display:grid;gap:4px}
+.toc a{display:block;padding:7px 14px;border:1px solid transparent;border-radius:var(--radius-pill);font:700 11px/1.3 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;text-decoration:none;color:var(--carbon)}
+.toc a:hover{background:var(--paper);border-color:var(--carbon);color:var(--carbon)}
+.toc a.on{background:var(--carbon);color:var(--paper);border-color:var(--carbon)}
+main{min-width:0}
+.band{position:relative;padding:80px 0;overflow:hidden}
+.band--sky{background:var(--sky)}
+.band--paper{background:var(--paper)}
+.band--gray{background:var(--concrete)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 48px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;height:28px;padding:0 12px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);font:700 12px/1 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;margin-bottom:24px}
+.display-xl{font-family:var(--font-display);font-weight:800;font-size:clamp(120px,22vw,280px);line-height:.8;letter-spacing:0}
+.h-sec{font:700 64px/1 var(--font-ui);letter-spacing:-.01em;margin-bottom:16px}
+.h-sub{font:700 24px/1.2 var(--font-ui);margin:48px 0 8px}
+.h-sub-sm{font:700 16px/1.3 var(--font-ui);margin:24px 0 8px}
+.lead{font:500 16px/1.5 var(--font-ui);max-width:68ch}
+.label{font:700 12px/1.2 var(--font-ui);letter-spacing:.032em;text-transform:uppercase}
+.tag{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border:1px solid var(--carbon);border-radius:var(--radius-pill);font:700 11px/1 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;background:var(--paper);white-space:nowrap}
+.tag--src{background:var(--sky)}.tag--prop{background:var(--lavender)}.tag--dec{background:var(--ember)}.tag--ok{background:var(--mint)}
+.tag--ghost{background:var(--paper)}
+.card{border:1px solid var(--carbon);border-radius:var(--radius-card);background:var(--paper);padding:24px}
+.card--lg{border-radius:var(--radius-card-lg)}
+.card--lav{background:var(--lavender)}
+.card--blue{background:var(--electric)}
+.card--qr{background:var(--violet);color:var(--paper)}
+.card--hover:hover{background:var(--sky)}
+.card h4{font:700 16px/1.3 var(--font-ui);margin-bottom:8px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.tbl-wrap{border:1px solid var(--carbon);border-radius:var(--radius-card);overflow:auto;background:var(--paper);margin:16px 0}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;line-height:1.45}
+.tbl th{background:var(--carbon);color:var(--paper);text-align:left;font:700 12px/1.2 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;padding:12px 16px;white-space:nowrap}
+.tbl td{padding:12px 16px;vertical-align:top}
+.tbl tbody tr:nth-child(even) td{background:var(--sky)}
+.tbl td:first-child{font-weight:700}
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:16px 0}
+.sw{border:1px solid var(--carbon);border-radius:var(--radius-card);overflow:hidden;background:var(--paper)}
+.sw-chip{height:112px}
+.sw-meta{padding:16px;display:grid;gap:4px;font-size:13px;line-height:1.4}
+.sw-meta b{font:700 15px/1.2 var(--font-ui)}
+.sw-meta small{font-family:var(--font-mono);font-size:12px;color:var(--ink-soft)}
+.demo{background:var(--paper);border:1px solid var(--carbon);border-radius:var(--radius-panel);padding:32px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:16px 0}
+.demo--sky{background:var(--sky)}
+.demo--col{flex-direction:column;align-items:stretch}
+.code{position:relative;background:var(--carbon);color:var(--paper);border-radius:var(--radius-card);padding:24px;overflow:auto;font-family:var(--font-mono);font-size:13px;line-height:1.6;white-space:pre;margin:16px 0}
+.code .btn{position:absolute;top:12px;right:12px;min-height:32px;padding:6px 12px;font-size:12px}
+.t-display{font-family:var(--font-display);font-weight:800;font-size:clamp(96px,14vw,200px);line-height:.8;letter-spacing:0}
+.t-display-lg{font-family:var(--font-display);font-weight:800;font-size:clamp(120px,30vw,640px);line-height:.75;letter-spacing:0}
+.t-heading{font:700 clamp(40px,5vw,64px)/1 var(--font-ui);letter-spacing:-.01em}
+.t-heading-sm{font:700 clamp(24px,2.4vw,30px)/1.1 var(--font-ui)}
+.t-subheading{font:700 24px/1.2 var(--font-ui)}
+.t-tagline{font:500 clamp(24px,3.6vw,64px)/1.1 var(--font-ui)}
+.t-body-lg{font:500 16px/1.5 var(--font-ui)}
+.t-body{font:500 15px/1.39 var(--font-ui)}
+.t-body-sm{font:500 14px/1.4 var(--font-ui)}
+.t-caption{font:500 12px/1.56 var(--font-ui)}
+.t-label{font:700 12px/1.2 var(--font-ui);letter-spacing:.032em;text-transform:uppercase}
+.t-button{font:700 14px/1.2 var(--font-ui);letter-spacing:.032em;text-transform:uppercase}
+.t-nav{font:700 13px/1.2 var(--font-ui);letter-spacing:.03em;text-transform:uppercase}
+.spec-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;align-items:baseline;padding:16px 0;overflow:hidden}
+.spec-row small{font-family:var(--font-mono);font-size:12px;color:var(--ink-soft)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:10px 12px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);color:var(--carbon);font:700 14px/1.2 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.btn::before{content:"";position:absolute;inset:-2px 0}
+.btn:hover{background:var(--sky);color:var(--carbon)}
+.btn:active,.btn.is-active{transform:translate(1px,1px)}
+.btn:focus-visible,.btn.is-focus{outline:3px solid var(--violet);outline-offset:2px}
+.btn--primary{background:var(--carbon);color:var(--paper)}
+.btn--primary:hover,.btn--primary.is-hover{background:var(--mist);color:var(--carbon)}
+.btn--primary:active,.btn--primary.is-active{background:var(--concrete);color:var(--carbon)}
+.btn--secondary{background:var(--violet);color:var(--paper)}
+.btn--secondary:hover,.btn--secondary.is-hover{background:var(--carbon);color:var(--paper)}
+.btn--destructive{background:var(--ember);color:var(--carbon)}
+.btn--destructive:hover,.btn--destructive.is-hover{background:var(--carbon);color:var(--ember)}
+.btn--icon{width:44px;min-height:44px;padding:0;border-radius:var(--radius-pill)}
+.btn--sm{min-height:36px;padding:8px 12px;font-size:13px}
+.btn--lg{min-height:56px;padding:16px 24px;font-size:15px}
+.btn:disabled,.btn[aria-disabled="true"]{background:var(--mist);color:rgba(0,0,0,.4);cursor:not-allowed;transform:none}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.pill-nav{display:flex;gap:4px;flex-wrap:wrap}
+.pill-nav a{display:inline-flex;align-items:center;padding:15px 12px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);font:700 13px/1 var(--font-ui);letter-spacing:.03em;text-transform:uppercase;text-decoration:none;color:var(--carbon)}
+.pill-nav a:hover{background:var(--sky)}
+.pill-nav a[aria-current="page"]{background:var(--carbon);color:var(--paper)}
+.navbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 12px 12px 16px;background:var(--paper);border:1px solid var(--carbon);border-radius:var(--radius-pill)}
+.logo-s{display:inline-grid;place-items:center;width:40px;height:40px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);font:800 20px/1 var(--font-display)}
+.marquee{display:flex;align-items:center;height:36px;overflow:hidden;background:var(--carbon);color:var(--paper);font:700 12px/1 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;white-space:nowrap}
+.marquee__track{display:flex;width:max-content;animation:slush-marquee 24s linear infinite}
+.marquee__track span{padding-right:32px}
+.marquee.is-paused .marquee__track,.marquee:hover .marquee__track,.marquee:focus-within .marquee__track{animation-play-state:paused}
+@keyframes slush-marquee{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee__track{animation:none}}
+.cover{padding-top:24px}
+.cover .ribbon{position:absolute;right:-160px;top:20px;width:760px;pointer-events:none;z-index:0}
+.cover > *:not(.ribbon){position:relative;z-index:1}
+.cover-actions{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:48px}
+.sticker-abs{position:absolute;pointer-events:none;z-index:2}
+.field{display:grid;gap:8px;max-width:360px;width:100%}
+.flabel{font:700 14px/1.2 var(--font-ui)}
+.input{width:100%;min-height:48px;padding:12px 16px;border:1px solid var(--carbon);border-radius:var(--radius-input);background:var(--paper);color:var(--carbon);font:500 15px/1.4 var(--font-ui)}
+.input::placeholder{color:var(--ink-soft);opacity:1}
+.input:hover{background:var(--sky)}
+.input:focus{outline:3px solid var(--violet);outline-offset:2px;background:var(--paper)}
+.input:disabled{background:var(--mist);color:rgba(0,0,0,.4);cursor:not-allowed}
+.help{font:500 13px/1.4 var(--font-ui);color:var(--ink-soft)}
+.err{display:flex;align-items:center;gap:8px;font:500 13px/1.4 var(--font-ui)}
+.ico-badge{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--ember);font:700 12px/1 var(--font-ui);flex:none}
+.switch{position:relative;display:inline-flex;align-items:center;gap:12px;cursor:pointer;font:500 15px/1.2 var(--font-ui)}
+.switch input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.switch__track{position:relative;width:44px;height:24px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);flex:none}
+.switch__thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--carbon);transition:transform var(--dur-base) var(--ease-out)}
+.switch input:checked + .switch__track{background:var(--carbon)}
+.switch input:checked + .switch__track .switch__thumb{transform:translateX(20px);background:var(--paper)}
+.switch input:focus-visible + .switch__track{outline:3px solid var(--violet);outline-offset:2px}
+.cb{width:20px;height:20px;accent-color:var(--carbon);margin:0}
+.progress{height:12px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);overflow:hidden}
+.progress > i{display:block;height:100%;width:64%;background:var(--carbon)}
+.spinner{width:24px;height:24px;border-radius:var(--radius-pill);border:2px solid var(--mist);border-top-color:var(--carbon);animation:slush-spin 1s linear infinite}
+@keyframes slush-spin{to{transform:rotate(360deg)}}
+.skel{background:var(--mist);border-radius:var(--radius-sticker);height:16px;animation:slush-pulse 1.2s ease-in-out infinite}
+@keyframes slush-pulse{50%{opacity:.6}}
+@media (prefers-reduced-motion:reduce){.spinner,.skel{animation:none}}
+.alert{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:16px 20px;border:1px solid var(--carbon);border-radius:var(--radius-card);background:var(--paper);font:500 14px/1.45 var(--font-ui)}
+.alert b{font:700 14px/1.3 var(--font-ui)}
+.alert--info{background:var(--sky)}
+.alert--error{background:var(--ember)}
+.toast-stack{position:fixed;left:24px;bottom:24px;display:grid;gap:12px;z-index:1100}
+.toast{min-width:280px;padding:16px 20px;border-radius:var(--radius-card);background:var(--carbon);color:var(--paper);font:500 14px/1.4 var(--font-ui)}
+.tip{position:relative;display:inline-flex}
+.tip-body{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);padding:8px 12px;border-radius:16px;background:var(--carbon);color:var(--paper);font:500 12px/1.4 var(--font-ui);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--dur-fast) var(--ease-out)}
+.tip:hover .tip-body,.tip:focus-within .tip-body,.tip-body.is-show{opacity:1}
+.dlg{width:min(520px,calc(100vw - 32px));padding:32px;border:1px solid var(--carbon);border-radius:var(--radius-panel);background:var(--paper);color:var(--carbon)}
+.dlg::backdrop{background:rgba(0,0,0,.6)}
+.dlg h3{font:700 30px/1.1 var(--font-ui);margin-bottom:12px}
+.menu{width:260px;padding:8px;border:1px solid var(--carbon);border-radius:var(--radius-card);background:var(--paper);display:grid;gap:4px}
+.menu a{display:flex;align-items:center;justify-content:space-between;min-height:40px;padding:0 12px;border-radius:var(--radius-pill);font:500 14px/1 var(--font-ui);text-decoration:none;color:var(--carbon)}
+.menu a:hover,.menu a.is-hover{background:var(--sky)}
+.menu a[aria-current="true"]{font-weight:700;background:var(--mist)}
+.tabs{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper)}
+.tabs button{min-height:36px;padding:0 16px;border:0;border-radius:var(--radius-pill);background:transparent;color:var(--carbon);font:700 13px/1 var(--font-ui);letter-spacing:.032em;text-transform:uppercase;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--carbon);color:var(--paper)}
+.pager{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pager .btn{min-width:44px;padding:0 12px}
+.crumbs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:500 12px/1.56 var(--font-ui)}
+.crumbs a{text-decoration:none}
+.crumbs .sep{color:var(--ink-soft)}
+.avatar{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--lavender);font:700 14px/1 var(--font-ui)}
+.avatar--sm{width:32px;height:32px;font-size:12px}
+.avatar--lg{width:80px;height:80px;font-size:24px}
+.acc{border:1px solid var(--carbon);border-radius:var(--radius-card);background:var(--paper);padding:0 20px}
+.acc + .acc{margin-top:12px}
+.acc summary{list-style:none;cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:space-between;font:700 16px/1.3 var(--font-ui)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";font:700 24px/1 var(--font-ui)}
+.acc[open] summary::after{content:"\2212"}
+.acc-body{padding:0 0 16px;font:500 15px/1.5 var(--font-ui)}
+.steps{display:flex;gap:12px;align-items:center;list-style:none;padding:0;margin:0;flex-wrap:wrap}
+.steps li{display:flex;align-items:center;gap:8px;font:700 13px/1 var(--font-ui)}
+.steps .n{display:inline-grid;place-items:center;width:32px;height:32px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper)}
+.steps .n.done{background:var(--mint)}
+.steps .n.cur{background:var(--carbon);color:var(--paper)}
+.spacer-bar{display:block;height:24px;background:var(--violet);border:1px solid var(--carbon);border-radius:var(--radius-sticker)}
+.rbox{width:120px;height:90px;border:1px solid var(--carbon);background:var(--lavender)}
+.kpi{font:700 64px/1 var(--font-ui);letter-spacing:-.01em}
+.pill-chip{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px;border:1px solid var(--carbon);border-radius:var(--radius-pill);background:var(--paper);font:700 12px/1 var(--font-ui);letter-spacing:.032em;text-transform:uppercase}
+.empty{display:grid;justify-items:start;gap:16px;max-width:520px}
+@media (max-width:960px){.doc{grid-template-columns:1fr}.toc{position:static;height:auto;overflow:visible}.wrap{padding:0 20px}.h-sec{font-size:44px}.band{padding:56px 0}}
+</style>
+</head>
+<body>
+<div class="doc">
+<aside class="toc" aria-label="Table of contents">
+<p class="label" style="margin-bottom:16px">Slush DS · v1.0</p>
+<nav>
+<a href="#overview">00 · Overview</a>
+<a href="#principles">01 · Principles</a>
+<a href="#color">02 · Color</a>
+<a href="#typography">03 · Typography</a>
+<a href="#spacing">04 · Spacing</a>
+<a href="#grid">05 · Grid and breakpoints</a>
+<a href="#radius">06 · Radius</a>
+<a href="#borders">07 · Borders and outlines</a>
+<a href="#elevation">08 · Elevation and z-index</a>
+<a href="#icons">09 · Iconography</a>
+<a href="#stickers">10 · Stickers</a>
+<a href="#ribbon">11 · 3D ribbon</a>
+<a href="#imagery">12 · Imagery</a>
+<a href="#motion">13 · Motion</a>
+<a href="#buttons">14 · Buttons</a>
+<a href="#navigation">15 · Navigation</a>
+<a href="#marquee">16 · Marquee</a>
+<a href="#cards">17 · Cards</a>
+<a href="#tags">18 · Tags and badges</a>
+<a href="#forms">19 · Forms</a>
+<a href="#feedback">20 · Feedback</a>
+<a href="#overlays">21 · Overlays</a>
+<a href="#data">22 · Data and navigation</a>
+<a href="#sections">23 · Sections, hero, footer</a>
+<a href="#templates">24 · Templates and states</a>
+<a href="#content">25 · Content and voice</a>
+<a href="#a11y">26 · Accessibility</a>
+<a href="#responsive">27 · Responsive</a>
+<a href="#web">28 · Web essentials</a>
+<a href="#tokens">29 · Tokens and handoff</a>
+<a href="#conflicts">30 · Source conflicts</a>
+<a href="#open">31 · Open decisions</a>
+<a href="#changelog">32 · Changelog</a>
+</nav>
+</aside>
+<main>
+
+<section class="band band--sky" id="overview">
+<div class="wrap cover">
+<svg class="ribbon" viewBox="0 0 1200 300" aria-hidden="true"><path d="M-20 220 C200 60 400 320 620 170 S1020 40 1220 150" fill="none" stroke="#000" stroke-width="86" stroke-linecap="round"/><path d="M-20 220 C200 60 400 320 620 170 S1020 40 1220 150" fill="none" stroke="#4da2ff" stroke-width="80" stroke-linecap="round"/></svg>
+<span class="eyebrow">Design system · v1.0 · Light theme</span>
+<h1 class="display-xl">Slush</h1>
+<p class="t-tagline" style="margin-top:32px;max-width:22ch">Pastel paper, crushed display type and sticker-book collage, built to read as a physical collage, not a fintech landing page.</p>
+<div class="cover-actions">
+<a class="btn btn--primary btn--lg" href="#tokens">Go to tokens</a>
+<a class="btn btn--lg" href="#buttons">See components</a>
+</div>
+<div class="meta-grid">
+<div class="card"><p class="label" style="margin-bottom:8px">Source</p><p class="t-body">Refero Styles entry “Slush” (slush.app), light theme.</p></div>
+<div class="card"><p class="label" style="margin-bottom:8px">Grid base</p><p class="t-body">4px unit, comfortable density, 1440px max width.</p></div>
+<div class="card"><p class="label" style="margin-bottom:8px">Coverage</p><p class="t-body">Foundations, components, patterns, accessibility, responsive rules, web essentials, tokens.</p></div>
+<div class="card"><p class="label" style="margin-bottom:8px">Status</p><p class="t-body">Source-derived values, with every gap marked as proposed.</p></div>
+</div>
+</div>
+</section>
+
+<section class="band band--paper">
+<div class="wrap">
+<p class="eyebrow">How to read this document</p>
+<h2 class="h-sec">Provenance tags</h2>
+<p class="lead">Every value in this file carries one origin tag, so you can tell what the source stated apart from what this system added.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Tag</th><th>Meaning</th><th>What to do</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag--src">Source</span></td><td>Stated directly in the Refero Slush specification.</td><td>Use as written.</td></tr>
+<tr><td><span class="tag tag--prop">Proposed</span></td><td>The source is silent. This is a recommendation that stays within the Slush rules.</td><td>Needs brand sign-off before production.</td></tr>
+<tr><td><span class="tag tag--dec">Decision</span></td><td>The source contradicts itself. The resolution is recorded in Section 30.</td><td>Follow the resolution; reverse it only through the changelog.</td></tr>
+<tr><td><span class="tag tag--ok">Rule</span></td><td>A derived constraint that must hold everywhere, such as no box-shadows.</td><td>Treat as non-negotiable.</td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="principles">
+<div class="wrap">
+<p class="eyebrow">Section 01</p>
+<h2 class="h-sec">Principles</h2>
+<p class="lead">Five rules shape every decision in this system. When a new component is unclear, check it against these first.</p>
+<div class="grid" style="margin-top:32px">
+<div class="card card--lg"><p class="label" style="margin-bottom:12px">01</p><h4>Collage, not fintech</h4><p class="t-body">Layer stickers over type and let color bands carry the structure. Avoid polished dashboard chrome.</p><p style="margin-top:16px"><span class="tag tag--src">Source</span></p></div>
+<div class="card card--lg"><p class="label" style="margin-bottom:12px">02</p><h4>Outline, never shadow</h4><p class="t-body">Every container uses a 1px black outline. No box-shadows, no gradients, no divider lines. Depth comes from color and overlap.</p><p style="margin-top:16px"><span class="tag tag--ok">Rule</span></p></div>
+<div class="card card--lg"><p class="label" style="margin-bottom:12px">03</p><h4>Loud display, quiet UI</h4><p class="t-body">Display type can reach 640px. UI text stays between 12px and 16px, in two weights only: 500 and 700.</p><p style="margin-top:16px"><span class="tag tag--src">Source</span></p></div>
+<div class="card card--lg"><p class="label" style="margin-bottom:12px">04</p><h4>Color is structure</h4><p class="t-body">Sections change by band color: Sky Wash, then Paper White, then Concrete Gray. The six sticker colors are used together, with no single accent.</p><p style="margin-top:16px"><span class="tag tag--src">Source</span></p></div>
+<div class="card card--lg"><p class="label" style="margin-bottom:12px">05</p><h4>Pill for action, soft for content</h4><p class="t-body">Navigation, buttons and tags are pills. Cards and panels use 20px to 40px radii. Nothing is squared off.</p><p style="margin-top:16px"><span class="tag tag--src">Source</span></p></div>
+<div class="card card--lg"><p class="label" style="margin-bottom:12px">06</p><h4>Comfortable and touchable</h4><p class="t-body">Targets are at least 44px. Density stays comfortable, not compact, so the collage can breathe on touch screens.</p><p style="margin-top:16px"><span class="tag tag--prop">Proposed</span></p></div>
+</div>
+</div>
+</section>
+
+<section class="band band--sky" id="color">
+<div class="wrap">
+<p class="eyebrow">Section 02</p>
+<h2 class="h-sec">Color</h2>
+<p class="lead">Eleven colors come from the source. One neutral text tone is proposed because the source defines only black and white for text.</p>
+
+<h3 class="h-sub">2.1 Primitive palette</h3>
+<div class="sw-grid">
+<div class="sw"><div class="sw-chip" style="background:#000000"></div><div class="sw-meta"><b>Carbon</b><span class="tag tag--src">Source</span><small>#000000 · rgb(0,0,0) · --carbon</small><span>Primary text, borders, primary CTA fill, logo mark.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#ffffff"></div><div class="sw-meta"><b>Paper White</b><span class="tag tag--src">Source</span><small>#FFFFFF · rgb(255,255,255) · --paper</small><span>Page canvas, card surfaces, ghost button fill, text on dark fills.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#dceeff"></div><div class="sw-meta"><b>Sky Wash</b><span class="tag tag--src">Source</span><small>#DCEEFF · rgb(220,238,255) · --sky</small><span>Hero background, first section band, hover surface.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#cccccc"></div><div class="sw-meta"><b>Concrete Gray</b><span class="tag tag--src">Source</span><small>#CCCCCC · rgb(204,204,204) · --concrete</small><span>Third section band, footer band, pressed states. Never used for text.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#e9e9e9"></div><div class="sw-meta"><b>Soft Mist</b><span class="tag tag--src">Source</span><small>#E9E9E9 · rgb(233,233,233) · --mist</small><span>Subtle tint, disabled fills, primary button hover.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#4da2ff"></div><div class="sw-meta"><b>Electric Blue</b><span class="tag tag--src">Source</span><small>#4DA2FF · rgb(77,162,255) · --electric</small><span>3D ribbons and card washes only. Never a CTA fill or a link color.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#55db9c"></div><div class="sw-meta"><b>Mint Pop</b><span class="tag tag--src">Source</span><small>#55DB9C · rgb(85,219,156) · --mint</small><span>Highlight washes, decorative bands, check stickers. Not a success color.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#e9ccff"></div><div class="sw-meta"><b>Lavender</b><span class="tag tag--src">Source</span><small>#E9CCFF · rgb(233,204,255) · --lavender</small><span>Soft cards, tags, sticker fills, avatar fallback.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#fb4903"></div><div class="sw-meta"><b>Ember</b><span class="tag tag--src">Source</span><small>#FB4903 · rgb(251,73,3) · --ember</small><span>Sticker icons, badge fills, destructive button and error badge.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#ffd731"></div><div class="sw-meta"><b>Sunburst</b><span class="tag tag--src">Source</span><small>#FFD731 · rgb(255,215,49) · --sunburst</small><span>Coin stickers and highlights. Never a text background.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#5c4ade"></div><div class="sw-meta"><b>Voltage Violet</b><span class="tag tag--src">Source</span><small>#5C4ADE · rgb(92,74,222) · --violet</small><span>Secondary CTA, wallet sticker, QR card, focus ring.</span></div></div>
+<div class="sw"><div class="sw-chip" style="background:#404040"></div><div class="sw-meta"><b>Ink Soft</b><span class="tag tag--prop">Proposed</span><small>#404040 · rgb(64,64,64) · --ink-soft</small><span>Muted text and placeholders. Equals black at 75% on Paper White.</span></div></div>
+</div>
+
+<h3 class="h-sub">2.2 Semantic role tokens</h3>
+<p class="lead">Components reference these names, never the primitives. Changing a brand color means changing one primitive.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Token</th><th>Resolves to</th><th>Use</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>--color-canvas</td><td>Paper White</td><td>Page background and card surfaces</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-band-1</td><td>Sky Wash</td><td>First section band, hero</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-band-2</td><td>Paper White</td><td>Second section band</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-band-3</td><td>Concrete Gray</td><td>Third section band, footer</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-text</td><td>Carbon</td><td>All primary text, icons, outlines</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-text-inverse</td><td>Paper White</td><td>Text on Carbon, Violet or Ember</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-text-muted</td><td>Ink Soft</td><td>Helper text, placeholders, captions</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--color-border</td><td>Carbon</td><td>Every 1px outline</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-action-primary</td><td>Carbon</td><td>Primary button fill</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-action-secondary</td><td>Voltage Violet</td><td>Secondary button fill</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-action-destructive</td><td>Ember</td><td>Destructive button fill (text stays Carbon)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--color-focus</td><td>Voltage Violet</td><td>3px focus outline on every control</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--color-disabled</td><td>Soft Mist</td><td>Disabled control fill</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--color-hover</td><td>Sky Wash</td><td>Hover on ghost and interactive surfaces</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--color-decor-ribbon</td><td>Electric Blue</td><td>3D ribbon artwork, card wash</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">2.3 Status colors</h3>
+<p class="lead">The source defines no success, error, warning or info colors, and it explicitly says Mint Pop is not a success color. Status is therefore carried by a label and an icon first, with color as a reinforcement only.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Status</th><th>Surface</th><th>Icon</th><th>Label</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Info</td><td>Sky Wash</td><td>Carbon “i” glyph</td><td>Info</td><td>Carbon on Sky Wash reaches about 18.7:1.</td></tr>
+<tr><td>Success</td><td>Paper White with 1px outline</td><td>Mint Pop check sticker (fill only)</td><td>Success</td><td>No success hue is assigned. Open decision D1.</td></tr>
+<tr><td>Warning</td><td>Paper White with 1px outline</td><td>Sunburst triangle (fill only)</td><td>Warning</td><td>Sunburst is never a background behind text.</td></tr>
+<tr><td>Error</td><td>Ember fill with Carbon text</td><td>Carbon “!” in Paper badge</td><td>Error</td><td>Carbon on Ember is about 6.1:1. White on Ember fails at about 3.5:1, so it is banned.</td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">2.4 Contrast matrix</h3>
+<p class="lead">Computed live from the WCAG 2.2 relative-luminance formula. Each cell shows the ratio and the highest level it passes for normal-size text.</p>
+<div class="tbl-wrap"><table class="tbl" id="matrix"></table></div>
+
+<h3 class="h-sub">2.5 Color usage rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Rule</th><th>Detail</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Text colors</td><td>Only Carbon and Paper White for text. Ink Soft is allowed for secondary text.</td><td><span class="tag tag--src">Source</span> <span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Concrete is never text</td><td>Concrete Gray on Paper White measures about 1.6:1 and fails every text level.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Sunburst is never a text background</td><td>It is used for coins and highlights only, and it can be a fill for an icon.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Electric Blue is decorative</td><td>Carbon on Electric Blue passes at about 7.9:1, but the brand bans it as a CTA fill or link color. The brand rule wins over the contrast result.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Gradients are banned</td><td>CSS gradients are not used anywhere. Ribbon shading is baked into the artwork file.</td><td><span class="tag tag--src">Source</span> <span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Links</td><td>Carbon text, underlined, shifting to Voltage Violet on hover. Electric Blue is never a link color.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Color ratio</td><td>Roughly 60% Paper and bands, 25% Sky and Concrete surfaces, 10% stickers, 5% Carbon ink.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Dark theme</td><td>Not defined by the source. Out of scope for v1.0. See Section 28.</td><td><span class="tag tag--dec">Decision</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="typography">
+<div class="wrap">
+<p class="eyebrow">Section 03</p>
+<h2 class="h-sec">Typography</h2>
+<p class="lead">Two families do all the work. Lateral handles display moments at extreme sizes, and Aeonik Pro handles everything the reader has to read. The proprietary font files were not supplied, so this page previews with open fallbacks.</p>
+
+<h3 class="h-sub">3.1 Families</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Role</th><th>Primary</th><th>Fallback chain</th><th>Weights</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Display</td><td>Lateral</td><td>Bowlby One, Druk, Antonio, Impact, sans-serif</td><td>800</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>UI and body</td><td>Aeonik Pro</td><td>Inter, Satoshi, General Sans, system-ui</td><td>500, 700</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Code</td><td>ui-monospace stack</td><td>SFMono, Menlo, Consolas, monospace</td><td>400</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:8px">OpenType features ss01 and tnum are applied to UI text. Tabular figures keep prices and tables aligned. Lateral has no weight 800 fallback, so the browser may synthesize bold. Confirm licenses for Lateral and Aeonik Pro before launch.</p>
+
+<h3 class="h-sub">3.2 Type scale</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Token</th><th>Size</th><th>Line height</th><th>Tracking</th><th>Weight</th><th>Use</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>display-lg</td><td>640px</td><td>0.75</td><td>0</td><td>Lateral 800</td><td>Oversized wordmark or hero word</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>display</td><td>200px</td><td>0.80</td><td>0</td><td>Lateral 800</td><td>Section banner headline</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>display-md</td><td>70, 110, 160, 281px</td><td>0.80</td><td>0</td><td>Lateral 800</td><td>Intermediate display steps</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>heading</td><td>64px</td><td>1.00</td><td>-0.01em</td><td>Aeonik 700</td><td>Page and section titles</td><td><span class="tag tag--dec">Decision</span></td></tr>
+<tr><td>heading-sm</td><td>30px</td><td>1.10</td><td>-0.01em</td><td>Aeonik 700</td><td>Card and subsection titles</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>tagline</td><td>24 to 64px</td><td>1.10</td><td>-0.01em</td><td>Aeonik 500</td><td>Supporting line under display text</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>subheading</td><td>24px</td><td>1.20</td><td>-0.01em</td><td>Aeonik 700</td><td>Group headings, nav labels</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>body-lg</td><td>16px</td><td>1.50</td><td>-0.01em</td><td>Aeonik 500</td><td>Lead paragraphs</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>body</td><td>15px</td><td>1.39</td><td>-0.01em</td><td>Aeonik 500</td><td>Default paragraph and card copy</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>body-sm</td><td>14px</td><td>1.40</td><td>-0.01em</td><td>Aeonik 500</td><td>Dense UI text, table cells</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>caption</td><td>12px</td><td>1.56</td><td>-0.01em</td><td>Aeonik 500</td><td>Metadata, legal, helper text</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>label</td><td>12px</td><td>1.20</td><td>0.032em</td><td>Aeonik 700, uppercase</td><td>Eyebrows, column headers, tags</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>button</td><td>13 to 14px</td><td>1.20</td><td>0.032em</td><td>Aeonik 700, uppercase</td><td>All buttons</td><td><span class="tag tag--src">Source</span> <span class="tag tag--dec">Decision</span></td></tr>
+<tr><td>nav</td><td>12 to 14px</td><td>1.20</td><td>0.030em</td><td>Aeonik 700, uppercase</td><td>Pill navigation</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>marquee</td><td>12 to 13px</td><td>1.00</td><td>0.032em</td><td>Aeonik 700, uppercase</td><td>Scrolling band</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">3.3 Fluid display sizes</h3>
+<p class="lead">The source sizes assume a 1280px or wider desktop. These clamp values scale the same styles down on smaller screens so that a 640px word does not overflow a phone.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Token</th><th>Clamp value</th><th>Reaches source size at</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>display-lg</td><td>clamp(120px, 30vw, 640px)</td><td>2133px viewport</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>display</td><td>clamp(96px, 14vw, 200px)</td><td>1429px viewport</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>heading</td><td>clamp(40px, 5vw, 64px)</td><td>1280px viewport</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>heading-sm</td><td>clamp(24px, 2.4vw, 30px)</td><td>1250px viewport</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">3.4 Live specimen</h3>
+<div class="demo demo--col">
+<div class="spec-row"><small>display-lg · 640 / 0.75</small><span class="t-display-lg">Aa</span></div>
+<div class="spec-row"><small>display · 200 / 0.80</small><span class="t-display">Crush it</span></div>
+<div class="spec-row"><small>heading · 64 / 1.0</small><span class="t-heading">Stickers on paper</span></div>
+<div class="spec-row"><small>heading-sm · 30 / 1.1</small><span class="t-heading-sm">Layered, loud and flat</span></div>
+<div class="spec-row"><small>tagline · 64 / 1.1</small><span class="t-tagline">Sticker energy, no shadows</span></div>
+<div class="spec-row"><small>subheading · 24 / 1.2</small><span class="t-subheading">Group heading for a content block</span></div>
+<div class="spec-row"><small>body-lg · 16 / 1.5</small><span class="t-body-lg">Lead copy sits here. Keep it short, plain and friendly so the display type stays the loudest thing on the screen.</span></div>
+<div class="spec-row"><small>body · 15 / 1.39</small><span class="t-body">Default paragraph text for cards, forms and descriptions across the site.</span></div>
+<div class="spec-row"><small>body-sm · 14 / 1.4</small><span class="t-body-sm">Dense UI copy, table cells and helper messages.</span></div>
+<div class="spec-row"><small>caption · 12 / 1.56</small><span class="t-caption">Metadata, timestamps and legal lines.</span></div>
+<div class="spec-row"><small>label · 12 / uppercase</small><span class="t-label">Eyebrow and column label</span></div>
+<div class="spec-row"><small>button · 14 / uppercase</small><span class="t-button">Get started</span></div>
+<div class="spec-row"><small>nav · 13 / uppercase</small><span class="t-nav">Explore the system</span></div>
+</div>
+
+<h3 class="h-sub">3.5 Typography rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Rule</th><th>Detail</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Lateral lines</td><td>Never set Lateral above a line height of 0.85. Display text sits on the ribbon or sticker cluster.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Display is never body</td><td>Lateral is for headlines and banners only, never paragraphs or UI labels.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Uppercase scope</td><td>Uppercase is limited to labels, nav, buttons and the marquee. Headings and paragraphs use sentence case.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Weights</td><td>Only 500 and 700 for UI text. 800 is reserved for Lateral.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Minimum size</td><td>Nothing below 12px. Legal text and captions stop at 12px.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Measure</td><td>Paragraphs run 60 to 72 characters per line.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Numerals</td><td>Use tabular figures in tables, prices, stats and timers.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Letter spacing</td><td>Stored as em values only. The source’s pixel values (-0.01px) are treated as conversions.</td><td><span class="tag tag--dec">Decision</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="spacing">
+<div class="wrap">
+<p class="eyebrow">Section 04</p>
+<h2 class="h-sec">Spacing</h2>
+<p class="lead">A 4px base with a fixed scale of sixteen steps. Arbitrary values are not allowed in component code.</p>
+
+<h3 class="h-sub">4.1 Spacing scale</h3>
+<div class="demo demo--col" style="gap:8px">
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-1</small><small>4px</small><span class="spacer-bar" style="width:4px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-2</small><small>8px</small><span class="spacer-bar" style="width:8px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-3</small><small>12px</small><span class="spacer-bar" style="width:12px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-4</small><small>16px</small><span class="spacer-bar" style="width:16px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-5</small><small>20px</small><span class="spacer-bar" style="width:20px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-6</small><small>24px</small><span class="spacer-bar" style="width:24px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-7</small><small>28px</small><span class="spacer-bar" style="width:28px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-8</small><small>32px</small><span class="spacer-bar" style="width:32px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-9</small><small>40px</small><span class="spacer-bar" style="width:40px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-10</small><small>44px</small><span class="spacer-bar" style="width:44px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-11</small><small>48px</small><span class="spacer-bar" style="width:48px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-12</small><small>60px</small><span class="spacer-bar" style="width:60px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-13</small><small>80px</small><span class="spacer-bar" style="width:80px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-14</small><small>128px</small><span class="spacer-bar" style="width:128px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-15</small><small>180px</small><span class="spacer-bar" style="width:180px"></span></div>
+<div class="spec-row" style="grid-template-columns:110px 70px minmax(0,1fr)"><small>--s-16</small><small>224px</small><span class="spacer-bar" style="width:224px"></span></div>
+</div>
+
+<h3 class="h-sub">4.2 Spacing in use</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Token</th><th>Where it applies</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>--s-1 (4px)</td><td>Gap between pill nav items; icon-to-text gap in tags</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--s-2 (8px)</td><td>Label to field; chip gap; helper text spacing</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--s-3 (12px)</td><td>Element gap (the source range is 4 to 12px); button icon gap</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--s-4 (16px)</td><td>Mobile page gutter; input horizontal padding</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--s-6 (24px)</td><td>Card padding; desktop container gutter</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--s-8 (32px)</td><td>Modal and large panel padding</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--s-10 (44px)</td><td>Minimum touch target and icon button size</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--s-11 (48px)</td><td>Gap between sections in a page; form input height</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--s-13 (80px)</td><td>Vertical padding of a full-bleed band on desktop</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--s-14 to --s-16 (128 to 224px)</td><td>Hero breathing room and display overlap zones only</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">Rules: use scale tokens only; never mix a token with a raw pixel value in the same component; density stays comfortable, so do not compress vertical rhythm below these steps.</p>
+</div>
+</section>
+
+<section class="band band--sky" id="grid">
+<div class="wrap">
+<p class="eyebrow">Section 05</p>
+<h2 class="h-sec">Grid and breakpoints</h2>
+<p class="lead">The source sets the maximum width and the 1280px design floor. It does not name columns, gutters or breakpoints, so those are proposed below.</p>
+
+<h3 class="h-sub">5.1 Container</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Value</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Max width</td><td>1440px, content centered</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Design floor</td><td>1280px. Layouts are not constrained below this width.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Layout type</td><td>Full-bleed, no sidebar. Bands run edge to edge; the container holds content.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Density</td><td>Comfortable</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">5.2 Breakpoints and columns</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Name</th><th>Min width</th><th>Columns</th><th>Gutter</th><th>Margin</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>xs</td><td>0</td><td>4</td><td>16px</td><td>16px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>sm</td><td>480px</td><td>6</td><td>16px</td><td>20px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>md</td><td>768px</td><td>8</td><td>20px</td><td>24px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>lg</td><td>1024px</td><td>12</td><td>24px</td><td>24px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>xl</td><td>1280px</td><td>12</td><td>24px</td><td>24px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>2xl</td><td>1440px</td><td>12 (fixed container)</td><td>24px</td><td>auto</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">At 1440px, one 12-column track is about 94px wide. The navigation collapses below 1024px (see Section 15).</p>
+</div>
+</section>
+
+<section class="band band--paper" id="radius">
+<div class="wrap">
+<p class="eyebrow">Section 06</p>
+<h2 class="h-sec">Border radius</h2>
+<p class="lead">Two families. Pill shapes for anything the user presses; large soft corners for anything that holds content.</p>
+
+<h3 class="h-sub">6.1 Radius tokens</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Token</th><th>Value</th><th>Use</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>--radius-pill</td><td>1600px</td><td>Navigation, buttons, tags, chips, icon buttons, avatars, switches, logo badge</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--radius-panel</td><td>30px</td><td>Modals, large content panels, the body radius in the source</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--radius-card-lg</td><td>40px</td><td>Elevated cards and feature blocks</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--radius-card</td><td>20px</td><td>Standard cards, alerts, menus, toasts, accordions</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>--radius-input</td><td>20px</td><td>Text inputs, selects, textareas</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--radius-sticker</td><td>16px</td><td>Sticker decorations, wallet icon, skeleton blocks, minimum radius for any container</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">6.2 Radius rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Rule</th><th>Detail</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>No small corners on containers</td><td>Cards never go below 16px.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Buttons and tags are pills</td><td>Use 1600px, not 40px. The 40px value in the source conflicts with this rule and is resolved in Section 30.</td><td><span class="tag tag--dec">Decision</span></td></tr>
+<tr><td>Pill equivalence</td><td>A 9999px value renders the same as 1600px on any element shorter than 3200px, so both are valid pills.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Checkbox exception</td><td>Native checkboxes keep their own 4px corner, as they are under 24px. Radios are circles.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">6.3 Radius preview</h3>
+<div class="demo">
+<div class="rbox" style="border-radius:var(--radius-pill)"></div>
+<div class="rbox" style="border-radius:var(--radius-sticker)"></div>
+<div class="rbox" style="border-radius:var(--radius-card)"></div>
+<div class="rbox" style="border-radius:var(--radius-card-lg);background:var(--sky)"></div>
+<div class="rbox" style="border-radius:var(--radius-panel);background:var(--mist)"></div>
+</div>
+</div>
+</section>
+
+<section class="band band--gray" id="borders">
+<div class="wrap">
+<p class="eyebrow">Section 07</p>
+<h2 class="h-sec">Borders and outlines</h2>
+<p class="lead">Structure comes from 1px black outlines and color bands. Dividers do not exist in this system.</p>
+
+<h3 class="h-sub">7.1 Border specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Element</th><th>Border</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Navigation items, buttons, tags, chips</td><td>1px solid Carbon</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Cards, stickers, logo badge, plus button</td><td>1px solid Carbon</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>QR panel hairline</td><td>1px solid Carbon</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Inputs, selects, textareas</td><td>1px solid Carbon; error is shown with an icon and text, not a thicker border</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Table wrapper</td><td>1px solid Carbon outside; rows separated by zebra color, not lines</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Border width</td><td>Only 1px exists. No 2px, 3px or 4px borders in the system.</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">7.2 Dividers and focus</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Concern</th><th>Rule</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Dividers</td><td>None. Sections are separated by color alone. Lists alternate Paper and Sky Wash rows.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Focus indicator</td><td>3px solid Voltage Violet outline, 2px offset. Outlines are not borders, so this does not break the 1px rule. The source has no focus style.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Focus contrast</td><td>Violet against Paper White is about 6.0:1, which clears the 3:1 non-text requirement.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="elevation">
+<div class="wrap">
+<p class="eyebrow">Section 08</p>
+<h2 class="h-sec">Elevation and z-index</h2>
+<p class="lead">Nothing floats on a shadow. Depth comes from color, outline and overlap.</p>
+
+<h3 class="h-sub">8.1 Elevation</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Level</th><th>Treatment</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Flat (base)</td><td>Paper White surface with 1px outline</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Raised</td><td>Lavender, Electric or Sky fill with 1px outline. Color does the lifting.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Overlapping</td><td>A sticker or ribbon crosses the edge of a card or headline. Overlap is the only way to layer content.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Shadow tokens</td><td>None. Box-shadows are banned, and no shadow token exists.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">8.2 Z-index scale</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Layer</th><th>Value</th><th>Contents</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>base</td><td>0</td><td>Page content and text</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>decor</td><td>1</td><td>Ribbons (behind text)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>sticker</td><td>2</td><td>Stickers overlapping display type</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>sticky</td><td>100</td><td>Sticky navigation bar</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>dropdown</td><td>200</td><td>Menus, popovers, select lists</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>overlay</td><td>900</td><td>Scrim behind modals and drawers</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>modal</td><td>1000</td><td>Dialogs and drawers</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>toast</td><td>1100</td><td>Toast notifications</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>tooltip</td><td>1200</td><td>Tooltips, always topmost</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">Scrim color is Carbon at 60% opacity. This is a flat alpha fill, not a gradient, so it is allowed.</p>
+</div>
+</section>
+
+<section class="band band--paper" id="icons">
+<div class="wrap">
+<p class="eyebrow">Section 09</p>
+<h2 class="h-sec">Iconography</h2>
+<p class="lead">The source names only two icons: the circular “S” logo badge and the circular “+” glyph. The rest of the icon set is proposed so that it matches those two.</p>
+
+<h3 class="h-sub">9.1 Source icons</h3>
+<div class="demo">
+<div style="display:grid;gap:8px;justify-items:center">
+<span class="logo-s">S</span><span class="help">Logo badge · 40px</span>
+</div>
+<div style="display:grid;gap:8px;justify-items:center">
+<span class="btn btn--icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="help">Plus button · 44px</span>
+</div>
+</div>
+
+<h3 class="h-sub">9.2 Proposed icon set</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Value</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Grid</td><td>24px grid, 2px padding, drawn at 16, 20, 24 or 32px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Stroke</td><td>2px at 24px size, round caps and joins, Carbon color only</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Sticker icons</td><td>One brand fill plus 1px Carbon outline. Used for status and feature badges, never in navigation.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Style lock</td><td>Never mix stroke icons and filled sticker icons in the same component.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Library</td><td>Use one stroke icon library, configured to 2px, and copy only the glyphs needed.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Minimum size</td><td>16px. Icon-only buttons have a 44px target.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">9.3 Status glyphs</h3>
+<div class="demo">
+<div style="display:grid;gap:8px;justify-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.5"/></svg><span class="help">Info</span></div>
+<div style="display:grid;gap:8px;justify-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg><span class="help">Success</span></div>
+<div style="display:grid;gap:8px;justify-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round"><path d="M12 3.5L22 20.5H2Z"/><path d="M12 10v4.5M12 17.5v.5" stroke-linecap="round"/></svg><span class="help">Warning</span></div>
+<div style="display:grid;gap:8px;justify-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span class="help">Error</span></div>
+</div>
+</div>
+</section>
+
+<section class="band band--sky" id="stickers">
+<div class="wrap">
+<p class="eyebrow">Section 10</p>
+<h2 class="h-sec">Stickers and illustration</h2>
+<p class="lead">Stickers are the core illustration language. They are flat, outlined in black, filled with exactly one brand color, and placed to overlap type. They never animate.</p>
+
+<h3 class="h-sub">10.1 Starter set</h3>
+<div class="demo" style="gap:32px">
+<div style="display:grid;gap:8px;justify-items:center;transform:rotate(-6deg)"><svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 10C64 24 67 50 63 72H33C29 50 32 24 48 10Z" fill="#fb4903" stroke="#000" stroke-width="1.5"/><circle cx="48" cy="40" r="8" fill="#fff" stroke="#000" stroke-width="1.5"/><path d="M33 58L20 74L35 70Z M63 58L76 74L61 70Z" fill="#fb4903" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="help">Rocket · Ember</span></div>
+<div style="display:grid;gap:8px;justify-items:center;transform:rotate(4deg)"><svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="43" fill="#ffd731" stroke="#000" stroke-width="1.5"/><circle cx="48" cy="48" r="31" fill="none" stroke="#000" stroke-width="1.5"/><text x="48" y="60" text-anchor="middle" font-family="Bowlby One, Inter, sans-serif" font-size="32" fill="#000">S</text></svg><span class="help">Coin · Sunburst</span></div>
+<div style="display:grid;gap:8px;justify-items:center;transform:rotate(-3deg)"><svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true"><rect x="12" y="26" width="72" height="50" rx="16" fill="#5c4ade" stroke="#000" stroke-width="1.5"/><rect x="56" y="42" width="28" height="18" rx="9" fill="#fff" stroke="#000" stroke-width="1.5"/><circle cx="64" cy="51" r="3" fill="#000"/></svg><span class="help">Wallet · Violet</span></div>
+<div style="display:grid;gap:8px;justify-items:center;transform:rotate(-8deg)"><svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="42" fill="#55db9c" stroke="#000" stroke-width="1.5"/><path d="M28 50L42 64L68 36" fill="none" stroke="#000" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="help">Checkmark · Mint Pop</span></div>
+</div>
+
+<h3 class="h-sub">10.2 Sticker rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Style</td><td>Flat 2D illustration, 1px Carbon outline, one brand fill. No gradients, textures or shading.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Corners</td><td>16px to 20px on rounded shapes</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Subjects</td><td>Rocket, coin, wallet, checkmark. Add new subjects only when they fit the collage idea.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Rotation</td><td>Between -12° and +12°. Every sticker is rotated, so none sits perfectly square.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Size</td><td>64px to 160px for content stickers; up to 320px for hero clusters</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Placement</td><td>Overlaps display type or a card corner. Sits above text (z-index 2).</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Motion</td><td>Static. No sticker animates, rotates or floats on scroll.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Accessibility</td><td>Decorative stickers get aria-hidden. A sticker that carries meaning gets a text label beside it.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Color pairing</td><td>Use all six sticker colors together across a page; never make one color the sole accent.</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="ribbon">
+<div class="wrap">
+<p class="eyebrow">Section 11</p>
+<h2 class="h-sec">3D ribbon</h2>
+<p class="lead">The signature motif: an inflated, grainy Electric Blue tube that sits full-bleed behind display type. Its shading is baked into the artwork, which is why no CSS gradient is used.</p>
+<div class="demo demo--sky" style="padding:0;overflow:hidden;position:relative;height:260px">
+<svg viewBox="0 0 1200 300" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><path d="M-20 220 C200 60 400 320 620 170 S1020 40 1220 150" fill="none" stroke="#000" stroke-width="86" stroke-linecap="round"/><path d="M-20 220 C200 60 400 320 620 170 S1020 40 1220 150" fill="none" stroke="#4da2ff" stroke-width="80" stroke-linecap="round"/></svg>
+<p class="t-heading-sm" style="position:absolute;left:24px;bottom:20px;z-index:1">Ribbon behind text</p>
+</div>
+<p class="help" style="margin-top:8px">The stand-in above is flat SVG. The production asset is the grainy 3D render.</p>
+
+<h3 class="h-sub">11.1 Ribbon specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Color</td><td>Electric Blue #4DA2FF, decorative only</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Form</td><td>Inflated tubular ribbon with grainy texture</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Placement</td><td>Full-bleed, static, behind display headlines (z-index 1)</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>File format</td><td>Transparent SVG for flat variants; WebP or PNG at 2x for the grainy render</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Responsive crop</td><td>Use object-position to keep the knot visible; crop to about 60% width below 768px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Not allowed</td><td>As a CTA background, link color or text fill; CSS gradient imitations</td><td><span class="tag tag--src">Source</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">11.2 Imagery and photography</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Photo grids</td><td>None. The source names no photography or illustration grids.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Photo treatment</td><td>Cut-out subject on a flat band color, 1px outline, 20px corners, lit flat with high contrast</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Aspect ratios</td><td>4:5 for portraits, 1:1 for avatars and tiles, 16:9 for wide banners</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Alt text</td><td>Required on every meaningful image. Decorative art uses empty alt.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Loading</td><td>Lazy-load below the fold with reserved aspect-ratio boxes to prevent layout shift</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="motion">
+<div class="wrap">
+<p class="eyebrow">Section 13</p>
+<h2 class="h-sec">Motion</h2>
+<p class="lead">Motion is minimal. The marquee loops, buttons respond to hover, and everything else is static.</p>
+
+<h3 class="h-sub">13.1 Motion specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Pattern</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Marquee</td><td>Continuous horizontal loop, linear, 24s per cycle. Pausable (Section 16).</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Button hover</td><td>Color transition only, 120ms, ease-out. The source says “minimal” with no value.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Button press</td><td>1px translate on :active, no scale</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Switch thumb</td><td>200ms, ease-out</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Stickers and ribbons</td><td>Static. No entrance animation, parallax or float.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Skeleton</td><td>Flat opacity pulse from 1.0 to 0.6, 1.2s. No gradient shimmer.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Spinner</td><td>1s linear rotation</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Page transitions</td><td>None. Navigation swaps content instantly.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Reduced motion</td><td>Under prefers-reduced-motion, the marquee stops, spinners and skeletons stop pulsing, and transitions are removed.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">13.2 Motion tokens</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Token</th><th>Value</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>--dur-fast</td><td>120ms</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--dur-base</td><td>200ms</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--dur-slow</td><td>320ms</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>--ease-out</td><td>cubic-bezier(0.2, 0, 0, 1)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="buttons">
+<div class="wrap">
+<p class="eyebrow">Section 14</p>
+<h2 class="h-sec">Buttons</h2>
+<p class="lead">Buttons are pills with 1px Carbon outlines and uppercase bold labels. Each screen gets one filled primary CTA. Hover states use the palette; there are no shadows.</p>
+
+<h3 class="h-sub">14.1 Variants</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Variant</th><th>Fill</th><th>Text</th><th>Hover</th><th>Pressed</th><th>Use</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Primary</td><td>Carbon</td><td>Paper White</td><td>Soft Mist fill, Carbon text</td><td>Concrete fill</td><td>The one filled CTA on a screen</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Secondary</td><td>Voltage Violet</td><td>Paper White</td><td>Carbon fill</td><td>Carbon fill, 1px nudge</td><td>Second action, alternate path</td><td><span class="tag tag--src">Source</span> <span class="tag tag--prop">Proposed states</span></td></tr>
+<tr><td>Ghost</td><td>Paper White</td><td>Carbon</td><td>Sky Wash fill</td><td>Concrete fill</td><td>Tertiary actions, nav CTA partner</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Destructive</td><td>Ember</td><td>Carbon</td><td>Carbon fill, Ember text</td><td>Carbon fill</td><td>Delete, cancel subscription</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Icon</td><td>Paper White</td><td>Carbon glyph</td><td>Sky Wash fill</td><td>Concrete fill</td><td>Plus menu, close, search</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Disabled</td><td>Soft Mist</td><td>Carbon at 40%</td><td>No change</td><td>No change</td><td>Any variant when unavailable</td><td><span class="tag tag--src">Source</span> <span class="tag tag--prop">Opacity</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">14.2 Sizes and anatomy</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Size</th><th>Visual height</th><th>Padding</th><th>Font</th><th>Hit area</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Small</td><td>36px</td><td>8px / 12px</td><td>13px</td><td>44px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Medium (default)</td><td>40px</td><td>10px / 12px</td><td>14px</td><td>44px</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Large</td><td>56px</td><td>16px / 24px</td><td>15px</td><td>56px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Icon</td><td>44px circle</td><td>0</td><td>Glyph 20px</td><td>44px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">The source gives 10px and 12px padding for CTAs. A ::before pseudo-element extends the hit area to 44px without changing the visual size.</p>
+
+<h3 class="h-sub">14.3 Live states</h3>
+<div class="demo">
+<div class="btn-row">
+<button class="btn btn--primary">Primary</button>
+<button class="btn btn--primary is-hover">Primary hover</button>
+<button class="btn btn--primary is-active">Primary pressed</button>
+<button class="btn btn--primary is-focus">Primary focus</button>
+<button class="btn btn--primary" disabled>Primary disabled</button>
+</div>
+<div class="btn-row">
+<button class="btn btn--secondary">Secondary</button>
+<button class="btn btn--secondary is-hover">Secondary hover</button>
+<button class="btn btn--ghost">Ghost</button>
+<button class="btn is-hover">Ghost hover</button>
+<button class="btn btn--destructive">Destructive</button>
+<button class="btn btn--destructive is-hover">Destructive hover</button>
+</div>
+<div class="btn-row">
+<button class="btn btn--sm btn--primary">Small</button>
+<button class="btn btn--primary">Medium</button>
+<button class="btn btn--lg btn--primary">Large</button>
+<button class="btn btn--icon" aria-label="Add item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+</div>
+</div>
+
+<h3 class="h-sub">14.4 Button rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Rule</th><th>Detail</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>One filled CTA per screen</td><td>More than one primary action competes. Use ghost buttons for the rest.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Primary fill</td><td>Carbon is the primary fill. White is the ghost fill, not the primary. The source conflicts here; see Section 30.</td><td><span class="tag tag--dec">Decision</span></td></tr>
+<tr><td>Labels</td><td>Verb first, two or three words: “Get started”, “Save draft”.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Loading</td><td>Keep the width. Swap the label for a 16px spinner and set aria-busy.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Disabled</td><td>Use the disabled attribute, not only styling, so keyboard and screen-reader users get the same state.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Focus</td><td>3px Voltage Violet outline, 2px offset, on every variant</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Text color on fills</td><td>Paper on Carbon and Violet. Carbon on Ember. Never white on Ember, which fails contrast.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="navigation">
+<div class="wrap">
+<p class="eyebrow">Section 15</p>
+<h2 class="h-sec">Navigation</h2>
+<p class="lead">The header stacks a marquee band over a single pill bar: logo on the left, pill links in the center, one filled CTA on the right.</p>
+
+<h3 class="h-sub">15.1 Desktop header</h3>
+<div class="demo demo--sky" style="flex-direction:column;align-items:stretch;gap:0;padding:24px">
+<div class="marquee" style="border-radius:var(--radius-pill);margin-bottom:16px"><div class="marquee__track"><span>Sticker-book collage</span><span>Pastel paper</span><span>Oversized type</span><span>Voltage violet</span></div></div>
+<div class="navbar">
+<span class="logo-s" aria-label="Slush home">S</span>
+<nav class="pill-nav" aria-label="Primary">
+<a href="#navigation" aria-current="page">Product</a>
+<a href="#navigation">Features</a>
+<a href="#navigation">Pricing</a>
+<a href="#navigation">Resources</a>
+</nav>
+<a class="btn btn--primary" href="#navigation">Get started</a>
+</div>
+</div>
+
+<h3 class="h-sub">15.2 Navigation specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Element</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Order</td><td>Marquee band on top, navigation bar below it</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Logo</td><td>Circular “S” badge, 40px, white fill, 1px Carbon outline, on the left</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Links</td><td>Pill items, 4px apart, 15px vertical and 12px horizontal padding, 13px uppercase bold, 1px outline, white fill</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>CTA</td><td>Single filled CTA on the right</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Link states</td><td>Hover Sky Wash; current page Carbon fill with Paper text; focus violet outline</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Height</td><td>Bar 64px minimum; sticky to the top of the viewport</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Collapse</td><td>Below 1024px, links move into a full-screen sheet opened by the circular “+” button. The sheet lists pills stacked full width with the CTA last.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Skip link</td><td>First focusable element, visible on focus, jumps to main content</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Footer navigation</td><td>Same pill styling in a row, wrapping on small screens</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="marquee">
+<div class="wrap">
+<p class="eyebrow">Section 16</p>
+<h2 class="h-sec">Marquee</h2>
+<p class="lead">A full-bleed black band with white uppercase text that repeats. It always sits at the top of the page, above the navigation.</p>
+
+<h3 class="h-sub">16.1 Live marquee</h3>
+<div class="demo demo--col" style="gap:12px">
+<div class="marquee" id="mq" style="border:1px solid var(--carbon);border-radius:var(--radius-pill)">
+<div class="marquee__track" aria-hidden="false">
+<span>New: Stickers, ribbons and six bold colors</span><span>Built for the collage web</span><span>Read the spec</span>
+<span>New: Stickers, ribbons and six bold colors</span><span>Built for the collage web</span><span>Read the spec</span>
+</div>
+</div>
+<div><button class="btn btn--sm" id="mq-toggle" aria-pressed="false">Pause</button></div>
+</div>
+
+<h3 class="h-sub">16.2 Marquee specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Band</td><td>Full-bleed Carbon fill, 36px tall on desktop, 32px on mobile</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Text</td><td>Paper White, Aeonik 700, 12 to 13px, 0.032em, uppercase, no inner padding</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Motion</td><td>Continuous horizontal loop. The content is duplicated once so the loop is seamless.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Pause control</td><td>Pauses on hover and focus, plus a visible Pause button. Moving content over five seconds needs a pause mechanism under WCAG 2.2.2.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Reduced motion</td><td>Stops entirely and shows the first message</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Content</td><td>Short phrases only. Duplicate copy is aria-hidden so screen readers do not repeat it.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Separator</td><td>Padding of 32px between messages. No dot or bullet glyphs.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="cards">
+<div class="wrap">
+<p class="eyebrow">Section 17</p>
+<h2 class="h-sec">Cards</h2>
+<p class="lead">Cards are the main content container. They use a 1px outline, a 24px inner padding and a color fill that does the lifting.</p>
+
+<h3 class="h-sub">17.1 Variants</h3>
+<div class="grid" style="margin:16px 0">
+<div class="card"><h4>Standard</h4><p class="t-body">Paper White, 20px corners, 1px Carbon outline.</p></div>
+<div class="card card--lav"><h4>Lavender</h4><p class="t-body">Soft fill for tags, highlights and feature blocks.</p></div>
+<div class="card card--blue card--lg"><h4>Electric wash</h4><p class="t-body">Decorative blue wash, 40px corners, for feature moments.</p></div>
+<div class="card card--hover"><h4>Interactive</h4><p class="t-body">Hover shifts to Sky Wash. Its whole surface is a link.</p></div>
+<div class="card card--qr" style="display:grid;gap:12px;justify-items:start">
+<h4>QR download</h4>
+<div style="background:var(--paper);border:1px solid var(--carbon);border-radius:var(--radius-sticker);padding:12px;width:112px;height:112px;display:grid;place-items:center">
+<svg width="84" height="84" viewBox="0 0 84 84" aria-hidden="true"><rect x="2" y="2" width="28" height="28" fill="none" stroke="#000"/><rect x="9" y="9" width="14" height="14" fill="#000"/><rect x="54" y="2" width="28" height="28" fill="none" stroke="#000"/><rect x="61" y="9" width="14" height="14" fill="#000"/><rect x="2" y="54" width="28" height="28" fill="none" stroke="#000"/><rect x="9" y="61" width="14" height="14" fill="#000"/><rect x="36" y="36" width="8" height="8" fill="#000"/><rect x="50" y="50" width="10" height="10" fill="#000"/><rect x="36" y="62" width="8" height="8" fill="#000"/><rect x="62" y="36" width="8" height="14" fill="#000"/></svg>
+</div>
+<span class="label" style="background:var(--paper);color:var(--carbon);border:1px solid var(--carbon);border-radius:var(--radius-pill);padding:6px 12px">Download</span>
+</div>
+</div>
+
+<h3 class="h-sub">17.2 Card specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Surface</td><td>Paper White, Lavender, Electric Blue wash or Voltage Violet (QR card)</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Radius</td><td>20px standard; 40px elevated. Never below 16px.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Outline</td><td>1px solid Carbon on every card, including colored cards</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Padding</td><td>24px all sides</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Internal gap</td><td>12px to 16px between title, copy and actions</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Shadow</td><td>None</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Hover (interactive)</td><td>Background shifts to Sky Wash, 120ms. No lift or shadow.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>QR download card</td><td>Voltage Violet 20px card, white QR panel with 1px Carbon hairline, white “Download” label</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Media</td><td>Images sit inside the card with a 16px top radius match. No photo cards in the source.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="tags">
+<div class="wrap">
+<p class="eyebrow">Section 18</p>
+<h2 class="h-sec">Tags, badges and chips</h2>
+<p class="lead">Pills with a 1px outline and uppercase bold text. The coin sticker is the only Sunburst form allowed, because Sunburst cannot sit behind text.</p>
+
+<h3 class="h-sub">18.1 Live examples</h3>
+<div class="demo">
+<span class="pill-chip">Lavender tag</span>
+<span class="pill-chip" style="background:var(--mint)">Mint highlight</span>
+<span class="pill-chip" style="background:var(--ember)">Ember badge</span>
+<span class="pill-chip" style="background:var(--sky)">Sky info</span>
+<span class="pill-chip" style="background:var(--lavender)">Removable <span aria-label="Remove" style="font-size:16px;line-height:1">×</span></span>
+<span class="pill-chip" style="background:var(--paper)">Outline</span>
+<span class="ico-badge" aria-label="3 items">3</span>
+</div>
+
+<h3 class="h-sub">18.2 Tag specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Shape</td><td>Pill, 1600px radius. Never a square or 16px tag.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Height and padding</td><td>28px tall; 12px horizontal padding</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Text</td><td>12px Aeonik 700, uppercase, 0.032em tracking, Carbon</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Fills</td><td>Lavender (default), Mint Pop (highlight), Ember (badge), Sky Wash (info), Paper (outline)</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Sunburst</td><td>Not allowed as a tag fill. Use the coin sticker beside text instead.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Counter badge</td><td>20px circle, Ember fill, 1px outline, Carbon numerals</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Removable chip</td><td>Tag plus a 16px close glyph; the whole chip is a 44px hit area on touch</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="forms">
+<div class="wrap">
+<p class="eyebrow">Section 19</p>
+<h2 class="h-sec">Forms</h2>
+<p class="lead">The source defines no form controls. Every control below is proposed, built from the same outline, pill and palette rules as buttons and cards.</p>
+
+<h3 class="h-sub">19.1 Input states</h3>
+<div class="demo" style="align-items:flex-start">
+<div class="field">
+<label class="flabel" for="f-default">Default</label>
+<input class="input" id="f-default" placeholder="Your name">
+<span class="help">Helper text sits below the field.</span>
+</div>
+<div class="field">
+<label class="flabel" for="f-hover">Hover</label>
+<input class="input is-hover" id="f-hover" placeholder="Hovered" style="background:var(--sky)">
+<span class="help">Sky Wash fill on hover.</span>
+</div>
+<div class="field">
+<label class="flabel" for="f-focus">Focus</label>
+<input class="input" id="f-focus" value="Focused" style="outline:3px solid var(--violet);outline-offset:2px">
+<span class="help">3px violet outline, border unchanged.</span>
+</div>
+<div class="field">
+<label class="flabel" for="f-error">Error</label>
+<input class="input" id="f-error" value="sumeet@" aria-invalid="true" aria-describedby="f-error-msg">
+<span class="err" id="f-error-msg"><span class="ico-badge" aria-hidden="true">!</span>Enter a full email address, such as name@example.com.</span>
+</div>
+<div class="field">
+<label class="flabel" for="f-ok">Valid</label>
+<input class="input" id="f-ok" value="hello@slush.app">
+<span class="err"><span class="ico-badge" style="background:var(--mint)" aria-hidden="true">✓</span>Looks good.</span>
+</div>
+<div class="field">
+<label class="flabel" for="f-dis">Disabled</label>
+<input class="input" id="f-dis" value="Locked" disabled>
+<span class="help">Unavailable while saving.</span>
+</div>
+</div>
+
+<h3 class="h-sub">19.2 Choice controls</h3>
+<div class="demo">
+<label class="switch"><input type="checkbox" checked><span class="switch__track"><span class="switch__thumb"></span></span>Notifications on</label>
+<label class="switch"><input type="checkbox"><span class="switch__track"><span class="switch__thumb"></span></span>Notifications off</label>
+<label style="display:flex;gap:12px;align-items:center;font:500 15px/1.2 var(--font-ui)"><input class="cb" type="checkbox" checked> Accept the terms</label>
+<label style="display:flex;gap:12px;align-items:center;font:500 15px/1.2 var(--font-ui)"><input class="cb" type="checkbox" disabled> Unavailable option</label>
+<label style="display:flex;gap:12px;align-items:center;font:500 15px/1.2 var(--font-ui)"><input type="radio" name="plan" checked style="width:20px;height:20px;accent-color:var(--carbon)"> Monthly</label>
+<label style="display:flex;gap:12px;align-items:center;font:500 15px/1.2 var(--font-ui)"><input type="radio" name="plan" style="width:20px;height:20px;accent-color:var(--carbon)"> Yearly</label>
+<div class="field" style="max-width:260px"><label class="flabel" for="rng">Stickers per page</label><input id="rng" type="range" min="0" max="10" value="4" style="accent-color:var(--carbon);width:100%"></div>
+</div>
+
+<h3 class="h-sub">19.3 Form specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Element</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Text input</td><td>48px tall; 12px / 16px padding; 15px Aeonik 500; 20px radius; 1px Carbon outline</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Label</td><td>Always visible, above the field, 14px Aeonik 700. Placeholders never replace labels.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Helper and error text</td><td>13px, 8px below the field. Errors use an Ember badge with a Carbon “!”, plus the message in Carbon.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Error without color</td><td>Errors are identified by the badge icon and words, and aria-invalid plus aria-describedby are set.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Placeholder</td><td>Ink Soft text, which measures about 10.4:1 on Paper White</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Checkbox and radio</td><td>20px, Carbon accent color via accent-color. Checkbox corners follow the browser default.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Toggle switch</td><td>44 by 24px pill; Carbon track when on, Paper thumb; Carbon thumb when off</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Range slider</td><td>Carbon accent, labelled, with the current value announced</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Validation timing</td><td>On blur for a field, and on submit for the whole form. Summarize all errors at the top of the form.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Required fields</td><td>Mark optional fields rather than required ones, since most fields are required</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Autocomplete</td><td>Set autocomplete tokens on personal and address fields</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="feedback">
+<div class="wrap">
+<p class="eyebrow">Section 20</p>
+<h2 class="h-sec">Feedback</h2>
+<p class="lead">Status messages use a label and an icon first. Color supports them. Each status below follows the proposed mapping in Section 2.3.</p>
+
+<h3 class="h-sub">20.1 Alerts</h3>
+<div class="demo demo--col" style="gap:12px">
+<div class="alert alert--info" role="status"><span class="ico-badge" style="background:var(--paper);color:var(--carbon)" aria-hidden="true">i</span><div><b>Info</b><br>Your sticker book saves automatically.</div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Success</b><br>Design tokens exported.</div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5L22 20.5H2Z"/><path d="M12 10v4.5M12 17.5v.5" stroke-linecap="round"/></svg><div><b>Warning</b><br>Two tokens are still marked as proposed.</div></div>
+<div class="alert alert--error" role="alert"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><div><b>Error</b><br>The file could not be saved. Try again.</div></div>
+</div>
+
+<h3 class="h-sub">20.2 Toast, progress, loading</h3>
+<div class="demo">
+<button class="btn btn--primary" id="toast-btn">Show toast</button>
+<div style="display:grid;gap:8px;width:280px"><span class="help">Upload progress · 64%</span><div class="progress" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
+<span class="spinner" role="img" aria-label="Loading"></span>
+<div style="display:grid;gap:8px;width:240px" aria-hidden="true"><span class="skel" style="width:100%"></span><span class="skel" style="width:76%"></span><span class="skel" style="width:52%"></span></div>
+</div>
+<div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+<h3 class="h-sub">20.3 Feedback specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Component</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Alert</td><td>20px radius card, 16px / 20px padding, 1px outline, icon left, bold title on first line</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Toast</td><td>Carbon fill, Paper text, 20px radius, bottom-left stack, 4 to 6 seconds, pauses on hover and focus. Errors use role alert; others use role status.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Progress bar</td><td>12px pill track with 1px outline, Carbon fill, percentage stated in text</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Spinner</td><td>24px ring, 2px stroke, Carbon arc on Soft Mist track, 1s rotation</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Skeleton</td><td>Soft Mist 16px bars, 16px radius, flat opacity pulse. No gradient shimmer.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Empty state</td><td>A sticker, a heading-sm line, one body sentence and one CTA. See Section 24.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="overlays">
+<div class="wrap">
+<p class="eyebrow">Section 21</p>
+<h2 class="h-sec">Overlays</h2>
+<p class="lead">Modals, menus and tooltips. They all sit on the z-index scale in Section 08, and their scrim is a flat Carbon alpha.</p>
+
+<h3 class="h-sub">21.1 Live examples</h3>
+<div class="demo">
+<button class="btn btn--primary" onclick="document.getElementById('dlg').showModal()">Open dialog</button>
+<dialog id="dlg" class="dlg" aria-labelledby="dlg-title">
+<h3 id="dlg-title">Publish this page?</h3>
+<p class="t-body" style="margin-bottom:24px">Once published, the page becomes visible to everyone with the link.</p>
+<form method="dialog" class="btn-row" style="justify-content:flex-end">
+<button class="btn btn--primary" value="ok">Publish</button>
+<button class="btn" value="cancel">Cancel</button>
+</form>
+</dialog>
+<div class="menu" role="menu" aria-label="Sample menu">
+<a href="#overlays" role="menuitem">Duplicate <span aria-hidden="true">⌘D</span></a>
+<a href="#overlays" role="menuitem" aria-current="true">Rename <span aria-hidden="true">✓</span></a>
+<a href="#overlays" role="menuitem" class="is-hover">Share link</a>
+<a href="#overlays" role="menuitem" style="font-weight:700"><span>Delete</span><span class="ico-badge" aria-hidden="true">!</span></a>
+</div>
+<span class="tip"><button class="btn btn--sm">Hover me</button><span class="tip-body is-show" role="tooltip">Copies the hex value</span></span>
+</div>
+
+<h3 class="h-sub">21.2 Overlay specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Component</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Modal</td><td>Paper panel, 30px radius, 1px outline, 32px padding, max 520px wide. Scrim is Carbon at 60%.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Modal behavior</td><td>Uses the native dialog element. Focus moves into the dialog, is trapped there, Escape closes it, and focus returns to the trigger.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Drawer</td><td>Right-edge panel, full height, 30px radius on the left corners only. Used for mobile navigation and filters.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Dropdown menu</td><td>Paper, 1px outline, 20px radius, 8px padding, 40px rows. Hover is Sky Wash; the current item is bold on Mist.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Destructive item</td><td>Ember text is not allowed for body-size text on Paper (3.5:1). Use the Destructive button or a bold Carbon label with a warning icon.</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Tooltip</td><td>Carbon fill, Paper text, 12px, 16px radius, 8px above the trigger, 300ms delay. Shows on focus too. Never holds essential information.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="data">
+<div class="wrap">
+<p class="eyebrow">Section 22</p>
+<h2 class="h-sec">Data and navigation components</h2>
+<p class="lead">Tables, tabs, pagination, breadcrumbs, accordions, avatars, steppers and metrics. The source gives none of these, so each is proposed within the palette and outline rules.</p>
+
+<h3 class="h-sub">22.1 Table</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Project</th><th>Status</th><th style="text-align:right">Tokens</th></tr></thead>
+<tbody>
+<tr><td>Landing page</td><td><span class="pill-chip" style="background:var(--mint)">Live</span></td><td style="text-align:right">142</td></tr>
+<tr><td>Pricing refresh</td><td><span class="pill-chip" style="background:var(--lavender)">Review</span></td><td style="text-align:right">88</td></tr>
+<tr><td>Onboarding</td><td><span class="pill-chip">Draft</span></td><td style="text-align:right">31</td></tr>
+<tr><td>Docs hub</td><td><span class="pill-chip" style="background:var(--ember)">Blocked</span></td><td style="text-align:right">57</td></tr>
+</tbody></table></div>
+<p class="help">Header row is Carbon with Paper label text. Rows alternate Paper and Sky Wash. Numbers are right-aligned and tabular. The header sticks on scroll; wide tables scroll horizontally with the first column pinned.</p>
+
+<h3 class="h-sub">22.2 Tabs, pagination, breadcrumbs</h3>
+<div class="demo demo--col" style="gap:20px">
+<div class="tabs" role="tablist" aria-label="Views"><button role="tab" aria-selected="true">Overview</button><button role="tab" aria-selected="false">Tokens</button><button role="tab" aria-selected="false">Changelog</button></div>
+<nav class="pager" aria-label="Pagination"><a class="btn" href="#data" aria-label="Previous page">‹</a><a class="btn" href="#data">1</a><a class="btn btn--primary" href="#data" aria-current="page">2</a><a class="btn" href="#data">3</a><span class="help">…</span><a class="btn" href="#data">9</a><a class="btn" href="#data" aria-label="Next page">›</a></nav>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="#data">Home</a><span class="sep" aria-hidden="true">/</span><a href="#data">Components</a><span class="sep" aria-hidden="true">/</span><span aria-current="page"><b>Cards</b></span></nav>
+</div>
+
+<h3 class="h-sub">22.3 Accordion, avatars, stepper, metrics</h3>
+<div class="demo demo--col" style="gap:20px">
+<div style="width:100%;max-width:560px">
+<details class="acc" open><summary>What counts as a sticker?</summary><div class="acc-body">A flat illustration with a black outline and one brand fill.</div></details>
+<details class="acc"><summary>Can I use gradients?</summary><div class="acc-body">No. The source prohibits them, so shading is baked into artwork.</div></details>
+</div>
+<div class="btn-row">
+<span class="avatar avatar--sm" aria-label="Avatar A">SR</span>
+<span class="avatar" aria-label="Avatar B">AK</span>
+<span class="avatar avatar--lg" aria-label="Avatar C">MP</span>
+</div>
+<ol class="steps" aria-label="Progress"><li><span class="n done" aria-hidden="true">✓</span>Brief</li><li><span class="n cur" aria-hidden="true">2</span>Tokens</li><li><span class="n" aria-hidden="true">3</span>Review</li></ol>
+<div class="grid" style="max-width:560px"><div class="card"><p class="label">Components</p><p class="kpi">32</p></div><div class="card card--lav"><p class="label">Open decisions</p><p class="kpi">9</p></div></div>
+</div>
+
+<h3 class="h-sub">22.4 Data component specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Component</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Table</td><td>Carbon header with uppercase labels; zebra rows; no lines; numbers tabular and right-aligned; sticky header; pinned first column on overflow</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Tabs</td><td>Pill group in a 1px outline; selected tab is Carbon fill with Paper text; arrow-key navigation</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Pagination</td><td>44px square pill buttons; current page is the primary style with aria-current</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Breadcrumbs</td><td>Caption text with a slash separator; current item bold and not linked</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Accordion</td><td>Each item is a 20px card; 56px summary row; plus or minus indicator; native details element</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Avatar</td><td>Circle (1600px radius), 1px outline, initials on Lavender; sizes 32, 44, 80px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Stepper</td><td>32px circles with 1px outline; done is Mint Pop, current is Carbon fill</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Metric (KPI)</td><td>Aeonik 700 at 64px for the number; uppercase label above; sits in a card</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="sections">
+<div class="wrap">
+<p class="eyebrow">Section 23</p>
+<h2 class="h-sec">Sections, hero and footer</h2>
+<p class="lead">Sections are full-bleed color bands in a fixed rotation. The hero is the one place where display type, ribbon and stickers meet.</p>
+
+<h3 class="h-sub">23.1 Hero anatomy</h3>
+<div class="demo" style="padding:0;position:relative;overflow:hidden;min-height:380px;display:block;background:var(--sky)">
+<svg viewBox="0 0 1200 300" preserveAspectRatio="none" style="position:absolute;left:0;right:0;top:110px;width:100%;height:280px" aria-hidden="true"><path d="M-20 220 C200 60 400 320 620 170 S1020 40 1220 150" fill="none" stroke="#000" stroke-width="86" stroke-linecap="round"/><path d="M-20 220 C200 60 400 320 620 170 S1020 40 1220 150" fill="none" stroke="#4da2ff" stroke-width="80" stroke-linecap="round"/></svg>
+<div style="position:relative;z-index:1;padding:48px">
+<p class="label" style="margin-bottom:16px">1 · Eyebrow</p>
+<h3 class="t-display" style="color:var(--carbon)">Make it</h3>
+<p class="t-tagline" style="margin-top:8px">2 · Tagline sits under the display word</p>
+<div class="btn-row" style="margin-top:24px"><a class="btn btn--primary btn--lg" href="#sections">3 · One filled CTA</a></div>
+</div>
+<svg class="sticker-abs" style="right:40px;top:28px;transform:rotate(8deg)" width="110" height="110" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="43" fill="#ffd731" stroke="#000" stroke-width="1.5"/><circle cx="48" cy="48" r="31" fill="none" stroke="#000" stroke-width="1.5"/><text x="48" y="60" text-anchor="middle" font-family="Bowlby One, Inter, sans-serif" font-size="32" fill="#000">S</text></svg>
+</div>
+<p class="help" style="margin-top:8px">The coin sticker overlaps the corner, the ribbon runs behind the display word, and the CTA is the only filled button.</p>
+
+<h3 class="h-sub">23.2 Section and hero rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Element</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Band rotation</td><td>Sky Wash, then Paper White, then Concrete Gray, repeating. No dividers and no shadows between bands.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Electric Blue</td><td>Not a band color. It appears only in ribbons and card washes.</td><td><span class="tag tag--dec">Decision</span></td></tr>
+<tr><td>Band padding</td><td>80px top and bottom on desktop; 56px below 960px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Hero headline</td><td>Lateral 800 at 200px to 640px, line height 0.75 to 0.80; always paired with a tagline and a ribbon or sticker cluster</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Hero tagline</td><td>Aeonik 500, 24px to 64px, placed below the display text</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>CTA per screen</td><td>One filled primary CTA per screen, which covers hero and footer together</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Feature grid</td><td>Two or three cards per row; each card may carry one sticker overlapping its corner</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>CTA band</td><td>Full-bleed Sky Wash band with a heading, one sentence and one filled CTA</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">23.3 Footer</h3>
+<div class="demo demo--col" style="background:var(--concrete);gap:16px">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px"><span class="logo-s" aria-label="Slush">S</span><nav class="pill-nav" aria-label="Footer"><a href="#sections">Product</a><a href="#sections">Docs</a><a href="#sections">Support</a><a href="#sections">Legal</a></nav></div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><input class="input" style="max-width:320px;background:var(--paper)" aria-label="Email address" placeholder="Email address"><button class="btn btn--primary">Subscribe</button></div>
+<p class="caption" style="font:500 12px/1.56 var(--font-ui)">© 2026 Slush. All rights reserved.</p>
+</div>
+<p class="help" style="margin-top:8px">Footer uses the third band color, Concrete Gray, with Carbon text. Its newsletter field is a pill-row form with a ghost-style input and a primary button.</p>
+
+<h3 class="h-sub">23.4 Footer specification</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Property</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Band</td><td>Concrete Gray, full-bleed, Carbon text</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Structure</td><td>Logo and pill links on one row, a newsletter row, then a legal line in caption type</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Columns on desktop</td><td>Four link groups on the 12-column grid, with the logo spanning three columns</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Mobile</td><td>Single column, groups stacked, pill links wrapping</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="templates">
+<div class="wrap">
+<p class="eyebrow">Section 24</p>
+<h2 class="h-sec">Page templates and states</h2>
+<p class="lead">Each template is a recipe built only from the components above. Every site page should map to one of these.</p>
+
+<h3 class="h-sub">24.1 Templates</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Template</th><th>Structure, top to bottom</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Landing page</td><td>Marquee, navbar, hero, feature grid, testimonial card, CTA band, footer</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Product or feature page</td><td>Marquee, navbar, sticker hero, alternating band sections with stickers, CTA band, footer</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Pricing</td><td>Heading, three cards with the highlighted plan on Electric wash, comparison table, FAQ accordion</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Article or blog post</td><td>Heading-sm title, metadata caption, 680px reading column, body at 18px and 1.6 line height, related cards</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Documentation</td><td>Navbar, two-column layout with pill sidebar links, article column, Carbon code blocks</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Sign in or sign up</td><td>Centered card 440px wide, heading-sm title, form fields, primary button, secondary text link</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Checkout or multi-step form</td><td>Stepper, one form per step, summary card on the right on desktop, sticky primary button on mobile</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Team or about</td><td>Hero, avatar grid with 80px avatars, mission cards, CTA band</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Contact</td><td>Heading, contact form, office or email card, FAQ link</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Legal (privacy, terms, cookies)</td><td>Heading-sm title, last-updated caption, table of contents in a Sky card, body at 16px, no sticker decoration</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">24.2 Empty, error and system states</h3>
+<div class="grid" style="margin:16px 0">
+<div class="card card--lav empty"><span class="tag tag--ghost">Empty</span><svg width="72" height="72" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 10C64 24 67 50 63 72H33C29 50 32 24 48 10Z" fill="#fb4903" stroke="#000" stroke-width="1.5"/><circle cx="48" cy="40" r="8" fill="#fff" stroke="#000" stroke-width="1.5"/></svg><h4 class="t-heading-sm" style="color:var(--carbon)">Nothing here yet</h4><p class="t-body">Add your first component to start the book.</p><a class="btn btn--primary btn--sm" href="#templates">Add component</a></div>
+<div class="card empty"><span class="tag tag--ghost">404</span><p class="t-display" style="font-size:96px">404</p><h4 class="t-heading-sm">This page slipped out</h4><p class="t-body">Check the address or head back to the start.</p><a class="btn btn--primary btn--sm" href="#overview">Back to home</a></div>
+<div class="card empty"><span class="tag tag--ghost">500</span><h4 class="t-heading-sm">Something broke on our side</h4><p class="t-body">We are on it. Try again in a minute.</p><a class="btn btn--sm" href="#templates">Try again</a></div>
+<div class="card card--blue empty"><span class="tag tag--ghost">Maintenance</span><h4 class="t-heading-sm">Back in a moment</h4><p class="t-body">We are updating the collage. Check our status page for times.</p></div>
+</div>
+
+<h3 class="h-sub">24.3 State rules</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>State</th><th>Rule</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Empty</td><td>Sticker, heading-sm line, one sentence, one CTA. Never a blank panel.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Loading</td><td>Skeleton blocks matching the final layout; spinner only for actions under two seconds long</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Error page</td><td>Keep the navigation, use display type for the code only, and offer one route back</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Offline</td><td>Show the navbar and a cached message card; never a blank screen</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Success</td><td>Toast or alert with label and icon; the next step is always visible</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="content">
+<div class="wrap">
+<p class="eyebrow">Section 25</p>
+<h2 class="h-sec">Content and voice</h2>
+<p class="lead">The visuals are loud, so the words stay plain. Short sentences, active verbs and no jargon.</p>
+
+<h3 class="h-sub">25.1 Voice and tone</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Attribute</th><th>Guideline</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Personality</td><td>Playful and precise. Friendly without being cute.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Sentences</td><td>Short. One idea per sentence. Lead with the verb in instructions.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Jargon</td><td>Avoid finance-style terms and marketing hype. The brand is not a fintech landing page.</td><td><span class="tag tag--src">Source</span></td></tr>
+<tr><td>Display headlines</td><td>One to three words, since display type is huge</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">25.2 Microcopy</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Element</th><th>Rule</th><th>Example</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Button labels</td><td>Verb plus object, up to three words</td><td>“Save draft”, not “Submit”</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Error messages</td><td>What happened, then how to fix it. No blame, no exclamation marks.</td><td>“Enter a full email address.”</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Helper text</td><td>One sentence stating the format or the reason</td><td>“Use 8 or more characters.”</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Empty states</td><td>Say what goes here and how to start</td><td>“Add your first component.”</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Casing</td><td>Sentence case for headings and body; uppercase only for labels, nav, buttons and the marquee</td><td>“Get started”, uppercase by style</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">25.3 Formats</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Type</th><th>Format</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Dates in UI</td><td>18 Nov 2026 (day, short month, year)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Dates in data</td><td>ISO 8601, such as 2026-11-18</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Numbers</td><td>Thousands separators, tabular figures, up to one decimal in marketing copy</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Currency</td><td>Symbol before the amount, two decimals, with the locale rules applied</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Punctuation</td><td>Curly quotes in display and body copy; straight quotes only in code</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="a11y">
+<div class="wrap">
+<p class="eyebrow">Section 26</p>
+<h2 class="h-sec">Accessibility</h2>
+<p class="lead">Target: WCAG 2.2 Level AA across the system. Where a brand rule and an accessibility rule conflict, the accessibility rule wins and the conflict is recorded.</p>
+
+<h3 class="h-sub">26.1 Contrast requirements</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Content</th><th>Minimum ratio</th><th>Applied to</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Normal text</td><td>4.5:1</td><td>All body, label and caption text</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Large text (24px regular or 18.66px bold and up)</td><td>3:1</td><td>Headings, taglines, display type</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Non-text UI</td><td>3:1</td><td>Outlines of controls, focus rings, icons that carry meaning</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Decorative art</td><td>Exempt</td><td>Ribbons, stickers without meaning, marquee glyphs</td><td><span class="tag tag--ok">Rule</span></td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">Use the matrix in Section 2.4 to check any new pairing before it ships.</p>
+
+<h3 class="h-sub">26.2 Accessibility checklist</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Area</th><th>Requirement</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Focus</td><td>Every interactive element shows a 3px violet outline with a 2px offset. Focus is never removed without a replacement.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Target size</td><td>24 by 24 CSS px minimum (WCAG 2.2, 2.5.8). The system targets 44px for all touch controls.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Keyboard</td><td>All controls reachable and operable by keyboard. Only dialogs trap focus, and they release it on close.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Skip link</td><td>First focusable item, jumps over the navbar and marquee to main content</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Moving content</td><td>Marquee pauses on hover and focus and has a visible Pause button (WCAG 2.2.2)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Reduced motion</td><td>Respect prefers-reduced-motion for the marquee, skeletons, spinners and transitions</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Color meaning</td><td>Status and error states use an icon and words in addition to color</td><td><span class="tag tag--ok">Rule</span></td></tr>
+<tr><td>Text resize</td><td>Layouts work at 200% zoom without clipping; no fixed heights on text containers</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Reflow</td><td>Content reflows at 320 CSS px width without horizontal scrolling, except tables and code (WCAG 1.4.10)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Text spacing</td><td>Line height, paragraph spacing, letter and word spacing can be overridden with no content loss (WCAG 1.4.12)</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Headings</td><td>One h1 per page, no skipped levels. Display words may be decorative spans if the h1 carries the real text.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Landmarks</td><td>header, nav, main, footer; labelled nav regions when more than one exists</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Images and stickers</td><td>Meaningful images have alt text; decorative stickers and ribbons are aria-hidden</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Forms</td><td>Visible labels, autocomplete tokens, errors identified in text and linked with aria-describedby</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Language</td><td>lang attribute set on html; changed-language passages marked inline</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Links</td><td>Link text makes sense out of context; “read more” includes a subject</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--paper" id="responsive">
+<div class="wrap">
+<p class="eyebrow">Section 27</p>
+<h2 class="h-sec">Responsive behavior</h2>
+<p class="lead">Design at 1440px, check at 1280px, and adapt downward. Nothing is designed for mobile first, because the source's scale is desktop-led.</p>
+
+<h3 class="h-sub">27.1 Component behavior by breakpoint</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Component</th><th>Desktop (1024px and up)</th><th>Below 1024px</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Navigation</td><td>Full pill bar with CTA</td><td>Logo, plus button, full-screen sheet</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Display type</td><td>Source sizes (200px to 640px)</td><td>Fluid clamp values (Section 3.3); 640px never reaches a phone</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Hero</td><td>Two-column with sticker cluster on the right</td><td>Single column; sticker cluster shrinks to 120px and moves below the CTA</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Cards</td><td>Three per row</td><td>One per row below 640px, two per row between 640px and 1023px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Stickers</td><td>All decorative stickers visible</td><td>Decorative stickers reduced to one per section below 480px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Ribbon</td><td>Full-bleed behind headline</td><td>Cropped to about 60% width, object-position on the knot</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Tables</td><td>Full width</td><td>Horizontal scroll with pinned first column; stacked cards below 640px</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Buttons</td><td>Inline row</td><td>Full-width primary CTA at the bottom of the screen where it matters most</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Footer</td><td>Four columns</td><td>Single column; groups stacked</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">27.2 Touch and input</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Concern</th><th>Rule</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Hover</td><td>Never the only way to reveal information. Touch uses the pressed state instead.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Hit areas</td><td>44px minimum; adjacent targets keep at least 8px apart</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Media</td><td>Responsive images with srcset and sizes; reserved aspect-ratio boxes</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="web">
+<div class="wrap">
+<p class="eyebrow">Section 28</p>
+<h2 class="h-sec">Web essentials</h2>
+<p class="lead">Everything a public site needs beyond its screens. None of this is in the source, so all of it is proposed to close the coverage gap.</p>
+
+<h3 class="h-sub">28.1 Site-level assets and metadata</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Item</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Favicon</td><td>Circular “S” badge. Provide SVG, 32px and 16px PNG, 180px apple-touch icon, and 192px and 512px PWA icons. The SVG uses a Carbon outline on Paper.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Share image (Open Graph)</td><td>1200 by 630px, Sky Wash band, display word, one sticker; text kept inside a 1080px safe area</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Page title</td><td>“Page name — Slush”, 60 characters or fewer</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Meta description</td><td>Up to 160 characters, one sentence, active voice</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Viewport and language</td><td>width=device-width, initial-scale=1; lang set on html; hreflang for each locale</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Canonical URL</td><td>One canonical per page; paginated pages self-reference</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Theme color</td><td>Paper White for the browser chrome; Carbon for the PWA splash</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">28.2 System pages and banners</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Item</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>404 page</td><td>Empty state pattern from Section 24.2 with the display “404”</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>500 page</td><td>Friendly message, retry button, and a link to the status page</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Maintenance page</td><td>Blue wash card with expected return time as text</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Cookie consent</td><td>Paper card with 20px radius and 1px outline, bottom-left. Accept is the primary button; Reject and Customize are ghost buttons with equal visual weight. Not a full-screen blocker.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Legal pages</td><td>Legal template from Section 24.1, linked from the footer on every page</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Accessibility statement</td><td>Linked from the footer; lists conformance target and contact route</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Print stylesheet</td><td>Hides navbar, marquee, stickers and ribbons; prints Carbon text on white; shows link URLs after anchors</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">28.3 Performance and loading</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Budget</th><th>Target (75th percentile)</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Largest Contentful Paint</td><td>2.5 seconds or less</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Interaction to Next Paint</td><td>200 milliseconds or less</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Cumulative Layout Shift</td><td>0.1 or less</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Fonts</td><td>Two font files maximum for UI, one for display. Use font-display: swap and preload the display font only.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Art</td><td>Stickers as inline SVG; ribbon as WebP or PNG at 2x; no CSS gradients, which also keeps the stylesheet small</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">28.4 Internationalization and themes</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Topic</th><th>Specification</th><th>Origin</th></tr></thead>
+<tbody>
+<tr><td>Text expansion</td><td>Allow up to 40% longer text (German, Finnish). Buttons and nav wrap instead of clipping.</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Non-Latin scripts</td><td>Fall back to a Noto family for the same weight; keep the line-height at 1.5 or more for these scripts</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Right-to-left</td><td>Mirror the pill nav order and directional icons; display words stay left-aligned in the brand layout unless the locale requires otherwise</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+<tr><td>Dark theme</td><td>Not in the source. Out of scope for v1.0; if it arrives later, Carbon becomes the canvas and sticker colors stay unchanged.</td><td><span class="tag tag--dec">Decision</span></td></tr>
+<tr><td>Email</td><td>Same palette, Paper canvas, Carbon CTA, 1px outlines; system fallback fonts only</td><td><span class="tag tag--prop">Proposed</span></td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<style>.btn.is-hover{background:var(--sky)}</style>
+
+<section class="band band--paper" id="tokens">
+<div class="wrap">
+<p class="eyebrow">Section 29</p>
+<h2 class="h-sec">Tokens and handoff</h2>
+<p class="lead">Copy these values into production. This page uses short names for readability; production code uses the semantic names from Section 2.2 with the same values.</p>
+
+<h3 class="h-sub">29.1 CSS custom properties</h3>
+<div style="position:relative">
+<button class="btn btn--sm" style="position:absolute;top:12px;right:12px;z-index:1" data-copy="tok-css">Copy</button>
+<pre class="code" id="tok-css">:root {
+  /* Primitive color (Source, except --ink-soft which is Proposed) */
+  --carbon: #000000;
+  --paper: #ffffff;
+  --sky: #dceeff;
+  --concrete: #cccccc;
+  --mist: #e9e9e9;
+  --electric: #4da2ff;
+  --mint: #55db9c;
+  --lavender: #e9ccff;
+  --ember: #fb4903;
+  --sunburst: #ffd731;
+  --violet: #5c4ade;
+  --ink-soft: #404040;
+
+  /* Semantic color */
+  --color-text: var(--carbon);
+  --color-text-inverse: var(--paper);
+  --color-text-muted: var(--ink-soft);
+  --color-canvas: var(--paper);
+  --color-band-1: var(--sky);
+  --color-band-2: var(--paper);
+  --color-band-3: var(--concrete);
+  --color-border: var(--carbon);
+  --color-action-primary: var(--carbon);
+  --color-action-secondary: var(--violet);
+  --color-action-destructive: var(--ember);
+  --color-focus: var(--violet);
+  --color-disabled: var(--mist);
+  --color-hover: var(--sky);
+
+  /* Radius */
+  --radius-pill: 1600px;
+  --radius-panel: 30px;
+  --radius-card-lg: 40px;
+  --radius-card: 20px;
+  --radius-input: 20px;
+  --radius-sticker: 16px;
+
+  /* Space (4px base) */
+  --s-1: 4px;   --s-2: 8px;    --s-3: 12px;   --s-4: 16px;
+  --s-5: 20px;  --s-6: 24px;   --s-7: 28px;   --s-8: 32px;
+  --s-9: 40px;  --s-10: 44px;  --s-11: 48px;  --s-12: 60px;
+  --s-13: 80px; --s-14: 128px; --s-15: 180px; --s-16: 224px;
+
+  /* Type */
+  --font-display: "Lateral", "Bowlby One", "Druk", "Antonio", Impact, sans-serif;
+  --font-ui: "Aeonik Pro", "Inter", "Satoshi", "General Sans", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* No box-shadow tokens exist. No gradient tokens exist. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}</pre>
+</div>
+
+<h3 class="h-sub">29.2 Tailwind v4 theme</h3>
+<div style="position:relative">
+<button class="btn btn--sm" style="position:absolute;top:12px;right:12px;z-index:1" data-copy="tok-tw">Copy</button>
+<pre class="code" id="tok-tw">@theme {
+  --color-carbon: #000000;
+  --color-paper: #ffffff;
+  --color-sky: #dceeff;
+  --color-concrete: #cccccc;
+  --color-mist: #e9e9e9;
+  --color-electric: #4da2ff;
+  --color-mint: #55db9c;
+  --color-lavender: #e9ccff;
+  --color-ember: #fb4903;
+  --color-sunburst: #ffd731;
+  --color-violet: #5c4ade;
+  --color-ink-soft: #404040;
+
+  --radius-pill: 1600px;
+  --radius-panel: 30px;
+  --radius-card: 20px;
+  --radius-card-lg: 40px;
+  --radius-sticker: 16px;
+
+  --font-display: "Lateral", "Bowlby One", sans-serif;
+  --font-ui: "Aeonik Pro", "Inter", sans-serif;
+
+  --spacing: 4px;
+}</pre>
+</div>
+
+<h3 class="h-sub">29.3 Naming and structure</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Convention</th><th>Pattern</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Token names</td><td>--{category}-{role}-{variant}-{state}</td><td>--color-action-primary-hover</td></tr>
+<tr><td>Component classes</td><td>Block, element, modifier (BEM-style)</td><td>.btn, .btn--primary, .btn.is-hover for documentation only</td></tr>
+<tr><td>Scale tokens</td><td>Use the scale name, never a raw value</td><td>--s-6, not 24px</td></tr>
+<tr><td>Type styles</td><td>One class per named role</td><td>.t-heading, .t-body-sm, .t-label</td></tr>
+<tr><td>States</td><td>Use real pseudo-classes in production; the is- classes exist only for this page</td><td>:hover, :focus-visible, :disabled, aria-current</td></tr>
+</tbody></table></div>
+
+<h3 class="h-sub">29.4 Component build checklist</h3>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Check</th><th>Pass condition</th></tr></thead>
+<tbody>
+<tr><td>Tokens</td><td>Uses only named tokens; no hex, no raw pixel spacing, no shadow, no gradient</td></tr>
+<tr><td>Outline</td><td>Exactly one 1px Carbon border where a container needs one</td></tr>
+<tr><td>Shape</td><td>Buttons and tags pill-shaped; containers at 16px or more</td></tr>
+<tr><td>States</td><td>Default, hover, focus-visible, pressed, disabled, and error or loading where relevant</td></tr>
+<tr><td>Targets</td><td>44px minimum for touch; 24px minimum at the WCAG floor</td></tr>
+<tr><td>Contrast</td><td>Every text pairing checked in the Section 2.4 matrix</td></tr>
+<tr><td>Motion</td><td>Only Section 13 durations; reduced-motion respected</td></tr>
+<tr><td>Copy</td><td>Matches Section 25 casing and button verbs</td></tr>
+<tr><td>Responsive</td><td>Checked at 1440, 1280, 1024, 768 and 375 px</td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--sky" id="conflicts">
+<div class="wrap">
+<p class="eyebrow">Section 30</p>
+<h2 class="h-sec">Source conflicts and resolutions</h2>
+<p class="lead">The Refero spec contradicts itself in eleven places. Each row records what it said, what this system does, and why.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>#</th><th>Issue</th><th>Source says</th><th>Resolution</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Filled CTA radius</td><td>Component table: 40px. Pill rule: 1600px.</td><td>Buttons are pills (1600px). The 40px value is not used for buttons.</td></tr>
+<tr><td>2</td><td>Primary action fill</td><td>Component uses Carbon. Agent prompt guide lists white.</td><td>Carbon is primary. White is ghost. Violet is secondary.</td></tr>
+<tr><td>3</td><td>Heading weight at 64px</td><td>Prose: 700. Scale table: 500.</td><td>Heading is 700. Tagline at 24 to 64px is 500.</td></tr>
+<tr><td>4</td><td>Letter-spacing units</td><td>Prose in em. Tokens in px (-0.01px).</td><td>Stored in em. The px values are treated as conversions.</td></tr>
+<tr><td>5</td><td>Electric Blue as background</td><td>Color table calls it a body background; band list omits it.</td><td>Not a band. Decorative only, per the band list.</td></tr>
+<tr><td>6</td><td>Example radius</td><td>Prompt example uses 9999px; system value is 1600px.</td><td>Use 1600px. Both render identically on elements under 3200px tall.</td></tr>
+<tr><td>7</td><td>Auto-generated radius aliases</td><td>--radius-full (1440px), --radius-full-2 (1500px), --radius-full-3 (1600px) are generated, not used.</td><td>Dropped. --radius-pill is the only pill token.</td></tr>
+<tr><td>8</td><td>Success color</td><td>Mint Pop is “not a success color”. No success color is defined.</td><td>No success hue assigned. Status uses label and icon. Open decision D1.</td></tr>
+<tr><td>9</td><td>Body size and line-height</td><td>The 16px step appears only in the rendered sample; body range is 12 to 16px.</td><td>body-lg is 16px at 1.5 line height, defined as a token.</td></tr>
+<tr><td>10</td><td>Max width versus floor</td><td>Max 1440px; design floor 1280px; no breakpoints given.</td><td>Container max 1440px; breakpoints proposed in Section 5.</td></tr>
+<tr><td>11</td><td>Sunburst usage</td><td>Coin stickers and highlights; never a text background.</td><td>Respected. Used only as sticker fill and warning icon fill.</td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+<section class="band band--gray" id="open">
+<div class="wrap">
+<p class="eyebrow">Section 31</p>
+<h2 class="h-sec">Open decisions and missing information</h2>
+<p class="lead">These items need a brand owner before the system leaves draft status. Nothing here blocks the source-derived foundations.</p>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>ID</th><th>Decision</th><th>Current proposal</th><th>Blocks</th></tr></thead>
+<tbody>
+<tr><td>D1</td><td>Success hue</td><td>No hue; label and check icon only</td><td>Success alerts, toasts</td></tr>
+<tr><td>D2</td><td>Focus ring color</td><td>Voltage Violet, 3px, 2px offset</td><td>All controls</td></tr>
+<tr><td>D3</td><td>Input and textarea radius</td><td>20px</td><td>Forms</td></tr>
+<tr><td>D4</td><td>Icon library</td><td>One 2px stroke library, selected glyphs only</td><td>Icons, alerts</td></tr>
+<tr><td>D5</td><td>Dark theme</td><td>Out of scope for v1.0</td><td>Theming</td></tr>
+<tr><td>D6</td><td>Font licenses</td><td>Lateral and Aeonik Pro licenses to confirm; fallbacks shipped meanwhile</td><td>Launch</td></tr>
+<tr><td>D7</td><td>Sticker rotation and size ranges</td><td>-12° to +12°; 64px to 160px</td><td>Illustration production</td></tr>
+<tr><td>D8</td><td>Footer band color</td><td>Concrete Gray</td><td>Footer build</td></tr>
+<tr><td>D9</td><td>Motion durations</td><td>120, 200, 320ms; ease-out curve</td><td>Motion review</td></tr>
+<tr><td>D10</td><td>Grid and breakpoints</td><td>12 columns; 480, 768, 1024, 1280px</td><td>Layout build</td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">Missing from the source and not yet proposed: illustration beyond the four starter stickers, video and animation beyond the marquee, data-visualization palette, and a social-icon set.</p>
+</div>
+</section>
+
+<section class="band band--paper" id="changelog">
+<div class="wrap">
+<p class="eyebrow">Section 32</p>
+<h2 class="h-sec">Changelog</h2>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead>
+<tbody>
+<tr><td>1.0</td><td>2026-11-18</td><td>First full specification. Built from the Refero “Slush” entry. Source values tagged as Source; gaps tagged as Proposed; eleven conflicts resolved in Section 30.</td></tr>
+</tbody></table></div>
+<p class="help" style="margin-top:12px">Owner: to be assigned. Review cycle: after decisions D1 to D10 are closed, then quarterly.</p>
+</div>
+</section>
+
+</main>
+</div>
+
+<script>
+// Copy buttons for code blocks
+document.querySelectorAll('[data-copy]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var target = document.getElementById(btn.getAttribute('data-copy'));
+    var text = target ? target.innerText : '';
+    var done = function(ok){
+      btn.textContent = ok ? 'Copied' : 'Copy failed';
+      setTimeout(function(){ btn.textContent = 'Copy'; }, 1600);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+    } else { done(false); }
+  });
+});
+
+// Contrast matrix, computed with the WCAG 2.2 relative luminance formula
+(function(){
+  function lin(c){ c = c / 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  function lum(hex){ var n = parseInt(hex.slice(1), 16); return 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255); }
+  function ratio(a, b){ var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function grade(r){ return r >= 7 ? 'AAA' : r >= 4.5 ? 'AA' : r >= 3 ? 'Large text only' : 'Fail'; }
+  var texts = [['Carbon', '#000000'], ['Paper', '#ffffff'], ['Ink Soft', '#404040']];
+  var bgs = [['Paper', '#ffffff'], ['Sky', '#dceeff'], ['Concrete', '#cccccc'], ['Mist', '#e9e9e9'], ['Electric', '#4da2ff'], ['Mint', '#55db9c'], ['Lavender', '#e9ccff'], ['Ember', '#fb4903'], ['Sunburst', '#ffd731'], ['Violet', '#5c4ade']];
+  var h = '<thead><tr><th>Text on background</th>' + bgs.map(function(b){ return '<th>' + b[0] + '</th>'; }).join('') + '</tr></thead><tbody>';
+  texts.forEach(function(t){
+    h += '<tr><td style="font-weight:700">' + t[0] + '</td>';
+    bgs.forEach(function(b){
+      if (t[1] === b[1]) { h += '<td style="text-align:center">—</td>'; return; }
+      var r = ratio(t[1], b[1]);
+      h += '<td style="background:' + b[1] + ';color:' + t[1] + ';text-align:center;font:500 13px/1.3 var(--font-ui);padding:10px"><b>' + r.toFixed(2) + ':1</b><br>' + grade(r) + '</td>';
+    });
+    h += '</tr>';
+  });
+  document.getElementById('matrix').innerHTML = h + '</tbody>';
+})();
+
+// Marquee: duplicate content for a seamless loop (the #mq demo is already duplicated in markup)
+document.querySelectorAll('.marquee:not(#mq) .marquee__track').forEach(function(track){
+  Array.prototype.slice.call(track.children).forEach(function(child){
+    var copy = child.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    track.appendChild(copy);
+  });
+});
+(function(){
+  var items = document.querySelectorAll('#mq .marquee__track span');
+  items.forEach(function(s, i){ if (i >= items.length / 2) s.setAttribute('aria-hidden', 'true'); });
+  var mq = document.getElementById('mq');
+  var btn = document.getElementById('mq-toggle');
+  btn.addEventListener('click', function(){
+    var paused = mq.classList.toggle('is-paused');
+    btn.textContent = paused ? 'Play' : 'Pause';
+    btn.setAttribute('aria-pressed', String(paused));
+  });
+})();
+
+// Toast demo
+document.getElementById('toast-btn').addEventListener('click', function(){
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.setAttribute('role', 'status');
+  t.textContent = 'Saved to your sticker book.';
+  document.getElementById('toast-stack').appendChild(t);
+  setTimeout(function(){ t.remove(); }, 4000);
+});
+
+// Highlight the current section in the table of contents
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        links.forEach(function(l){ l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id); });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('section[id]').forEach(function(s){ io.observe(s); });
+})();
+</script>
+</body>
+</html>
