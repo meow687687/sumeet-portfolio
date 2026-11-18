@@ -16,7 +16,7 @@ vi.mock('framer-motion', async () => {
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
-it('stops the reveal immediately when reduced motion changes after mount', () => {
+it('selects a stationary target when reduced motion changes after mount', () => {
   let reduced = false;
   let listener: (() => void) | undefined;
   vi.stubGlobal('matchMedia', () => ({
