@@ -1,22 +1,15 @@
-# Sumeet Basfore — portfolio
+# Sumeet Basfore
 
-A single-page portfolio built with Next.js App Router, React, TypeScript, Framer Motion, and Three.js. The earlier design prototypes and static export are preserved in `prototypes/`.
+This repository contains my personal portfolio and showcases a selection of my projects.
 
-## Development
+## Copyright and use
 
-```sh
-npm install
-npm run dev
-```
+© Sumeet Basfore. All rights reserved.
 
-Open http://localhost:3000. Run `npm run lint`, `npm test`, `npm run typecheck`, and `npm run build` to check the project. Run `npm run start` after a successful build to serve it.
+The portfolio's original code, design, illustrations, and written content are not licensed for reuse, copying, modification, or distribution without my prior permission. Third-party dependencies and assets remain subject to their respective licenses.
 
-## Structure and motion
+## Contact
 
-`lib/projects.ts` holds typed project content. `app/page.tsx` assembles the server-rendered page, and small components own navigation, moving-text controls, artwork, and interactions. `app/globals.css` contains the visual system.
+Email: [sumeetbasfore210@gmail.com](mailto:sumeetbasfore210@gmail.com)
 
-The primary hero and content render without WebGL. Three.js loads on the client for optional decorative particles and pauses when the hero is off screen, the tab is hidden, looping animation is paused, or the visitor prefers reduced motion. Framer Motion handles scroll-driven decorative depth, with reduced-motion fallbacks. Either pause control pauses the looping decorative elements and both text strips. Google Fonts are loaded with system fallbacks.
-
-Project descriptions are summarized from repository documentation; project illustrations are conceptual. A canonical URL and social preview image are not configured because the production domain is undecided.
-
-`next.config.ts` uses Next.js's documented TypeScript compiler API mode because the CLI configuration parser failed in this environment. Type checking remains enabled during builds.
+LinkedIn: [Sumeet Basfore](https://www.linkedin.com/in/sumeet-basfore-405037399/)
